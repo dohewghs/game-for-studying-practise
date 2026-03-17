@@ -1,1 +1,4 @@
-# game for studying practise
+# game for studying practice
+
+!\[Architecture Diagram](diagrams/diagram.png)
+
