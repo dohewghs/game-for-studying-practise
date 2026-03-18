@@ -1,0 +1,12 @@
+{
+	"name": "lesson2",
+	"version": "0.1.0",
+	"builtin-baseline": "a621075ff1d8db4a356b140090c2ca66bb88e815",
+	"dependencies": [
+		"sdl3",
+		{
+			"name": "sdl3-image",
+			"features": [ "png", "jpeg" ]
+		}
+	]
+}
