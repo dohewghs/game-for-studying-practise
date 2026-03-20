@@ -17,4 +17,27 @@ public:
 		y(other.y)
 	{
 	};
+
+	Vector2& operator+=(const Vector2& other)
+	{
+		this->x += other.x;
+		this->y += other.y;
+
+		return *this;
+	}
+
+	Vector2& operator*=(double koef)
+	{
+		this->x *= koef;
+		this->y *= koef;
+
+		return *this;
+	}
+
+	Vector2 operator*(double koef)
+	{
+		Vector2 res(*this); 
+		res *= koef;     
+		return res;
+	}
 };
