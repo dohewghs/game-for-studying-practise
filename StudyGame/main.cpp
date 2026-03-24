@@ -1,7 +1,4 @@
-﻿// game for studying practise.cpp : Defines the entry point for the application.
-//
-
-#include "main.h"
+﻿#include "main.h"
 
 
 
