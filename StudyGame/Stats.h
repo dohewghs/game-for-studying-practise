@@ -5,7 +5,7 @@ struct Stats
 
 	double luck;
 	double damageCoef;
-	double speedCoef;
+	double walkingSpeed;
 	double attackSpeed;
 
 	Stats() :
@@ -13,7 +13,7 @@ struct Stats
 		maxHp(100),
 		luck(1.0),
 		damageCoef(1.0),
-		speedCoef(1.0),
+		walkingSpeed(1.0),
 		attackSpeed(1.0)
 	{
 	};
