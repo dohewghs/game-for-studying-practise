@@ -38,8 +38,8 @@ public:
 		acceleration = Vector2(0, 0);
 	}
 
-	void setVelocity(double value)
+	void setVelocityY(double value)
 	{
-		this->velocity = value;
+		this->velocity.y = value;
 	}
 };
