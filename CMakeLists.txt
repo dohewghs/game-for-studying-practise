@@ -14,5 +14,6 @@ project ("StudyGame")
 # Include sub-projects.
 find_package(SDL3 CONFIG REQUIRED)
 find_package(SDL3_image CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
 
 add_subdirectory ("StudyGame")
