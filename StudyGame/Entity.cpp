@@ -7,35 +7,18 @@ Entity::Entity() :
 	rigidBody(&this->hitBox),
 	statistics(),
 	weapon(),
-	contorller(nullptr),
 	presenter(nullptr)
 {
 }
 
 Entity::~Entity()
 {
-	delete this->contorller;
 	delete this->presenter;
-}
-
-void Entity::move(Vector2 direction, float deltaTime)
-{
-	double speed = this->statistics.walkingSpeed;
-	Vector2 movementForce = direction * speed;
-
-	rigidBody.applyForce(movementForce);
 }
 
 void Entity::update(Vector2 additionalForce, float deltaTime)
 {
 	rigidBody.applyForce(additionalForce);
-
-	if (!this->contorller)
-		return;
-	
-	Vector2 inputDirection = this->contorller->getInputDirection();
-
-	this->move(inputDirection, deltaTime);
 
 	this->rigidBody.update(deltaTime);
 

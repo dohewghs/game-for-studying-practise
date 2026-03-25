@@ -15,14 +15,12 @@ private:
 	Rect hitBox;
 	Stats statistics;
 	Weapon weapon;
-	IController* contorller;
 	IEntityPresenter* presenter;
 
 public:
 	Entity();
 	~Entity();
 
-	void move(Vector2 direction, float deltaTime);
 	void update(Vector2 additionalForce, float deltaTime);
 	void present();
 
