@@ -16,7 +16,7 @@ Rect::Rect(const Rect& other) :
 {
 }
 
-bool Rect::HasIntersection(const Rect& first, const Rect& second)
+bool HasIntersection(const Rect& first, const Rect& second)
 {
 	bool xOverlap = (first.x < second.x + second.width) && 
 		(first.x + first.width > second.x);
@@ -25,6 +25,16 @@ bool Rect::HasIntersection(const Rect& first, const Rect& second)
 		(first.y + first.height > second.y);
 
 	return (xOverlap && yOverlap);
+}
+
+SDL_Rect toSDLRect(const Rect& rect)
+{
+	return SDL_Rect(rect.x, rect.y, rect.width, rect.height);
+}
+
+SDL_FRect toSDLFRect(const Rect& rect)
+{
+	return SDL_FRect(rect.x, rect.y, rect.width, rect.height);
 }
 
 //Rect& Rect::operator=(const Rect& other)

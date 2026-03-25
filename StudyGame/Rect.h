@@ -1,4 +1,5 @@
 #pragma once
+#include <SDL3/SDL_rect.h>
 
 class Rect
 {
@@ -16,5 +17,7 @@ public:
 
 	~Rect() = default;
 
-	static bool HasIntersection(const Rect& first, const Rect& second);
+	friend bool HasIntersection(const Rect& first, const Rect& second);
+	friend SDL_Rect toSDLRect(const Rect& rect);
+	friend SDL_FRect toSDLFRect(const Rect& rect);
 };
