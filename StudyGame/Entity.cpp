@@ -16,9 +16,9 @@ Entity::~Entity()
 	delete this->presenter;
 }
 
-void Entity::update(Vector2 additionalForce, float deltaTime)
+void Entity::update(Vector2 force, float deltaTime)
 {
-	rigidBody.applyForce(additionalForce);
+	rigidBody.applyForce(force);
 
 	this->rigidBody.update(deltaTime);
 
