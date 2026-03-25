@@ -1,5 +1,15 @@
 #include "Floor.h"
 
+Floor::Floor(IFloorPresenter*& _presenter)
+{
+	this->floor = std::vector<Rect>();
+	floor.push_back(Rect(0, 500, 500, 10));
+
+	this->presenter = _presenter;
+}
+
+Floor::~Floor() = default;
+
 bool Floor::hasIntersection(const Rect& rect) const
 {
 	for (Rect floorRect : this->floor)
