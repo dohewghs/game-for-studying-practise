@@ -25,7 +25,7 @@ void PhysicsEngine::updateCollisions(std::vector<std::unique_ptr<Entity>>& entit
 	}
 }
 
-bool PhysicsEngine::canJump(Entity entity, const Floor& floor)
+bool PhysicsEngine::canJump(const Entity& entity, const Floor& floor)
 {
 	Rect sensor = entity.getHitBox();
 	sensor.y += 1;
