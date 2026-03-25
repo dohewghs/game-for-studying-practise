@@ -3,6 +3,7 @@
 #include <vector>
 
 class IFloorPresenter;
+class BaseFloorPresenter;
 
 class Floor
 {
@@ -16,4 +17,6 @@ public:
 
 	bool hasIntersection(const Rect& rect) const;
 	bool updateGroundCollision(Rect& rect) const;
+
+	friend class BaseFloorPresenter;
 };

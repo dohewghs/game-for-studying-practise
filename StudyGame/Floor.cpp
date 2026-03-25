@@ -14,7 +14,7 @@ bool Floor::hasIntersection(const Rect& rect) const
 {
 	for (Rect floorRect : this->floor)
 	{
-		if (Rect::HasIntersection(floorRect, rect))
+		if (HasIntersection(floorRect, rect))
 		{
 			return true;
 		}
@@ -28,7 +28,7 @@ bool Floor::updateGroundCollision(Rect& rect) const
 
 	for (Rect floorRect : this->floor)
 	{
-		if (Rect::HasIntersection(floorRect, rect))
+		if (HasIntersection(floorRect, rect))
 		{
 			double overlapY = (rect.y + rect.height) - floorRect.y;
 			rect.y -= overlapY;
