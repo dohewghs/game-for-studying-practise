@@ -6,7 +6,7 @@
 #include "IController.h"
 #include "IEntityPresenter.h"
 
-class Floor;
+class BaseEntityPresenter;
 
 class Entity
 {
@@ -28,4 +28,5 @@ public:
 	Rect getHitBox() const;
 	void setVelocityY(double value);
 
+	friend class BaseEntityPresenter;
 };
