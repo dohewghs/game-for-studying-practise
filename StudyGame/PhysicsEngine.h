@@ -6,7 +6,7 @@ class Floor;
 class PhysicsEngine
 {
 private:
-	Vector2 gravityScale{ 0, 10 };
+	Vector2 gravityScale{ 0, 9.81 };
 
 public:
 	void update(std::vector<std::unique_ptr<Entity>>& entities, const Floor& floor, float deltaTime);
