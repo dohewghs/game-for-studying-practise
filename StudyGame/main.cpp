@@ -1,46 +1,35 @@
 ﻿#include "main.h"
-
+#include "App.h"
 
 
 int main(int argc, char* argv[]) 
 {
     //std::cout << std::filesystem::current_path() << '\n';
-
     SDL_Init(SDL_INIT_VIDEO);
+    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl"); // або "direct3d11" для Windows
 
     SDL_Window* window = SDL_CreateWindow("Test", 640, 480, 0);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL);
 
-    // ЗАМІСТЬ IMG_Init — спробуйте відразу завантажити текстуру
-    // Навіть якщо файлу немає, ми перевіримо, чи знає компілятор цю функцію
-    SDL_Texture* texture = IMG_LoadTexture(renderer, "..//..//..//..//assets//test//test.png");
+    App app(window, renderer);
+    app.run();
 
-    SDL_Log("Error: %s", SDL_GetError());
+    //while (true)
+    //{
+    //    SDL_SetRenderDrawColor(renderer, 30, 30, 100, 255);
+    //    SDL_RenderClear(renderer);
 
-    if (texture == NULL) 
-    {
-        // Це нормально, якщо файлу немає. Головне — щоб тут не було помилки 'identifier not found'
-        SDL_Log("IMG_LoadTexture finded!");
-    }
+    //    // Малюємо нашу текстуру
+    //    if (texture) 
+    //    {
+    //        SDL_FRect rect = { 0,0,300,300 };
+    //        SDL_RenderTexture(renderer, texture, NULL, &rect);
+    //    }
 
-    while (true)
-    {
-        SDL_SetRenderDrawColor(renderer, 30, 30, 100, 255);
-        SDL_RenderClear(renderer);
+    //    // Показуємо результат на екрані
+    //    SDL_RenderPresent(renderer);
+    //}
 
-        // Малюємо нашу текстуру
-        if (texture) 
-        {
-            SDL_FRect rect = { 0,0,300,300 };
-            SDL_RenderTexture(renderer, texture, NULL, &rect);
-        }
-
-        // Показуємо результат на екрані
-        SDL_RenderPresent(renderer);
-    }
-
-
-    SDL_DestroyTexture(texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
