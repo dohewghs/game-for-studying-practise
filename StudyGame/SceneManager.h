@@ -1,19 +1,25 @@
 #pragma once
-//#include "IScene.h"
+#include <vector>
+#include "AppState.h"
+#include "MenuScene.h"
+
 class IScene;
 
 class SceneManager
 {
 private:
-	IScene* scene;
+	IScene* currentScene;
+	
+	std::vector<IScene*> scenes;
 
 public:
-	SceneManager() : scene(nullptr) {};
+	SceneManager();
 
-	void changeScene(IScene* newScene)
-	{
-		this->scene = newScene;
-	}
+	~SceneManager();
 
-	void 
+	void changeScene(AppState state);
+
+	IScene* getScene();
+
+	void MakeScenes();
 };
