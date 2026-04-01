@@ -5,11 +5,12 @@
 class BaseEntityPresenter : public IEntityPresenter
 {
 public:
-	void present(SDL_Surface*& surface, const Entity* entity) override
+	void present(SDL_Renderer* renderer, const Entity* entity) override
 	{
-		SDL_Rect entityRect = toSDLRect(entity->hitBox);
+		SDL_FRect entityRect = toSDLFRect(entity->hitBox);
 		Uint32 color = 10;
 
-		SDL_FillSurfaceRect(surface, &entityRect, color);
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+		SDL_RenderRect(renderer, &entityRect);
 	}
 };

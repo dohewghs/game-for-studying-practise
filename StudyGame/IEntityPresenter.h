@@ -1,8 +1,8 @@
 #pragma once
-#include <SDL3/SDL.h>
+#include <SDL3/SDL_render.h>
 
 class IEntityPresenter
 {
 public:
-	virtual void present(SDL_Surface*& surface, const Entity* entity) = 0;
+	virtual void present(SDL_Renderer* renderer, const Entity* entity) = 0;
 };
