@@ -3,9 +3,9 @@
 
 class MenuScene : public IScene
 {
-
+	AppState nextState;
 public:
-	void present(SDL_Surface*& surface) override;
+	void present(SDL_Renderer*& renderer) override;
 	void update(float deltaTime) override;
-	void handleInput() override;
+	AppState handleInput() override;
 };
