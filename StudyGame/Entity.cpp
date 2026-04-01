@@ -24,11 +24,11 @@ void Entity::update(Vector2 force, float deltaTime)
 
 }
 
-void Entity::present()
+void Entity::present(SDL_Renderer* renderer)
 {
 	if (this->presenter)
 	{
-		this->presenter->present(this->hitBox);
+		this->presenter->present(renderer, this);
 	}
 }
 

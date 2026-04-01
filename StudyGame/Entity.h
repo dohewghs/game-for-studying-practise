@@ -22,7 +22,7 @@ public:
 	~Entity();
 
 	void update(Vector2 additionalForce, float deltaTime);
-	void present();
+	void present(SDL_Renderer* renderer);
 
 	Rect& getHitBox();
 	Rect getHitBox() const;
