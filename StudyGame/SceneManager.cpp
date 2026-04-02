@@ -1,4 +1,7 @@
 #include "SceneManager.h"
+#include "MenuScene.h"
+#include "GameScene.h"
+#include <iostream>
 
 SceneManager::SceneManager() :
 	currentScene(nullptr),
@@ -8,12 +11,15 @@ SceneManager::SceneManager() :
 
 SceneManager::~SceneManager()
 {
-	this->currentScene = nullptr;
-
-	for (IScene* scene : scenes)
+	for (IScene* scene : scenes) 
 	{
-		delete scene;
+		if (scene != nullptr) 
+		{
+			delete scene;
+		}
 	}
+
+	this->currentScene = nullptr;
 }
 
 void SceneManager::changeScene(AppState state)
@@ -40,8 +46,9 @@ IScene* SceneManager::getScene()
 void SceneManager::MakeScenes()
 {
 	this->scenes.resize(10);
-
+	
 	this->scenes[static_cast<int>(AppState::menu)] = new MenuScene();
+	this->scenes[static_cast<int>(AppState::game)] = new GameScene();
 
 	this->currentScene = this->scenes[static_cast<int>(AppState::menu)];
 }
