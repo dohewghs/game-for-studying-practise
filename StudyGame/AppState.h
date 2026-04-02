@@ -5,5 +5,6 @@ enum class AppState
 	menu,
 	settings,
 	game,
+	paused,
 	close
 };
