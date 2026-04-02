@@ -1,9 +1,9 @@
 #include "PhysicsEngine.h"
 #include "Floor.h"
 
-void PhysicsEngine::update(std::vector<std::unique_ptr<Entity>>& entities, const Floor& floor, float deltaTime)
+void PhysicsEngine::update(std::vector<Entity*>& entities, const Floor& floor, float deltaTime)
 {
-	for (std::unique_ptr<Entity>& entity : entities)
+	for (Entity* entity : entities)
 	{
 		entity->update(this->gravityScale, deltaTime);
 	}
@@ -11,9 +11,9 @@ void PhysicsEngine::update(std::vector<std::unique_ptr<Entity>>& entities, const
 	this->updateCollisions(entities, floor);
 }
 
-void PhysicsEngine::updateCollisions(std::vector<std::unique_ptr<Entity>>& entities, const Floor& floor)
+void PhysicsEngine::updateCollisions(std::vector<Entity*>& entities, const Floor& floor)
 {
-	for (std::unique_ptr<Entity>& entity : entities)
+	for (Entity* entity : entities)
 	{
 		Rect& hitBox = entity->getHitBox();
 
@@ -21,7 +21,6 @@ void PhysicsEngine::updateCollisions(std::vector<std::unique_ptr<Entity>>& entit
 		{
 			entity->setVelocityY(0);
 		}
-		
 	}
 }
 

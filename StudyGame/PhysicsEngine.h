@@ -9,8 +9,8 @@ private:
 	Vector2 gravityScale{ 0, 9.81 };
 
 public:
-	void update(std::vector<std::unique_ptr<Entity>>& entities, const Floor& floor, float deltaTime);
-	void updateCollisions(std::vector<std::unique_ptr<Entity>>& entities, const Floor& floor);
+	void update(std::vector<Entity*>& entities, const Floor& floor, float deltaTime);
+	void updateCollisions(std::vector<Entity*>& entities, const Floor& floor);
 
 	bool canJump(const Entity& entity, const Floor& floor);
 };
