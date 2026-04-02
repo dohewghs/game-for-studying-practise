@@ -7,12 +7,14 @@ class BaseFloorPresenter : public IFloorPresenter
 {
 	
 public:
-	void present(SDL_Surface*& surface, const Floor& floor) override
+	void present(SDL_Renderer*& renderer, const Floor* floor) override
 	{
-		Uint32 color = 0;
-		for (auto item : floor.floor)
+		for (const Rect& item : floor->floor)
 		{
-			SDL_FillSurfaceRect(surface, &toSDLRect(item), color);
+			SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
+
+			SDL_FRect rect = toSDLFRect(item);
+			SDL_RenderFillRect(renderer, &rect);
 		}
 	}
 };
