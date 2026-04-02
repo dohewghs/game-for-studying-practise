@@ -30,21 +30,26 @@ void App::run()
 
 	while (isRunning)
 	{
-		AppState state = this->scenesManager.getScene()->handleInput();
+		auto currentScene = this->scenesManager.getScene();
 
-		this->scenesManager.getScene()->update(0.1);
+		AppState state = currentScene->handleInput();
 
 		if (state == AppState::close)
 		{
 			isRunning = false;
 			std::cout << "End app" << std::endl;
+
+			break;
 		}
+
+		this->scenesManager.getScene()->update(0.1);
+
 		this->scenesManager.changeScene(state);
 
 		SDL_SetRenderDrawColor(renderer, 100, 0, 0, 255);
 		SDL_RenderClear(renderer); // ÎÁÎÂ'ßÇÊÎÂÎ ÏÅĞÅÄ PRESENT
 
-		this->scenesManager.getScene()->present(renderer);
+		currentScene->present(renderer);
 
 		SDL_RenderPresent(renderer);
 	}
