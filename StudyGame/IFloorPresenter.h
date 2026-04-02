@@ -5,5 +5,7 @@ class Floor;
 class IFloorPresenter
 {
 public:
-	virtual void present(SDL_Surface*& surface, const Floor& floor) = 0;
+	virtual ~IFloorPresenter() = default;
+
+	virtual void present(SDL_Renderer*& renderer, const Floor* floor) = 0;
 };

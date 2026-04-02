@@ -4,5 +4,7 @@
 class IEntityPresenter
 {
 public:
+	virtual ~IEntityPresenter() = default;
+
 	virtual void present(SDL_Renderer* renderer, const Entity* entity) = 0;
 };

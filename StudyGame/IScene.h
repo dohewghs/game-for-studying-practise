@@ -5,6 +5,8 @@
 class IScene
 {
 public:
+	virtual ~IScene() = default;
+
 	virtual void present(SDL_Renderer*& renderer) = 0;
 	virtual void update(float deltaTime) = 0;
 	virtual AppState handleInput() = 0;
