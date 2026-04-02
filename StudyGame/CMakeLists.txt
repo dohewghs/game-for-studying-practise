@@ -20,7 +20,7 @@ add_executable (CMakeTarget "main.cpp"
 "BaseFloorPresenter.h" 
 "BaseEntityPresenter.h" 
 "IScene.h" 
-"MenuScene.h" "MenuScene.cpp" "SceneManager.h" "App.h" "App.cpp" "AppState.h" "SceneManager.cpp")
+"MenuScene.h" "MenuScene.cpp" "SceneManager.h" "App.h" "App.cpp" "AppState.h" "SceneManager.cpp" "GameScene.h" "GameUI.h" "GameScene.cpp" "UserController.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)
