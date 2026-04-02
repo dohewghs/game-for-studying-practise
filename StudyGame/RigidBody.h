@@ -9,14 +9,11 @@ class Rect;
 class RigidBody
 {
 private:
-	Rect* hitBox;
-
 	Vector2 velocity;
 	Vector2 acceleration;
 
 public:
-	RigidBody(Rect* _hitbox = nullptr) :
-		hitBox(_hitbox),
+	RigidBody() :
 		velocity(0,0),
 		acceleration(0,0)
 	{
@@ -28,12 +25,12 @@ public:
 		this->acceleration.y += force.y;
 	}
 
-	void update(float deltaTime)
+	void update(Rect& hitBox, float deltaTime)
 	{
 		velocity += acceleration * deltaTime;
 
-		hitBox->x += velocity.x * deltaTime;
-		hitBox->y += velocity.y * deltaTime;
+		hitBox.x += velocity.x * deltaTime;
+		hitBox.y += velocity.y * deltaTime;
 
 		acceleration = Vector2(0, 0);
 	}
