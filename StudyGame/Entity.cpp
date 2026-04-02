@@ -1,39 +1,28 @@
 #include "Entity.h"
 #include "IController.h"
 #include "Floor.h"
+#include <iostream>
 
 Entity::Entity() :
 	hitBox(0, 0, 50, 50),
-	rigidBody(&this->hitBox),
+	rigidBody(),
 	statistics(),
-	weapon(),
-	presenter(nullptr)
+	weapon()
 {
 }
 
-Entity::~Entity()
-{
-	delete this->presenter;
-}
+Entity::~Entity() = default;
 
 void Entity::update(Vector2 force, float deltaTime)
 {
 	rigidBody.applyForce(force);
 
-	this->rigidBody.update(deltaTime);
-
-}
-
-void Entity::present(SDL_Renderer* renderer)
-{
-	if (this->presenter)
-	{
-		this->presenter->present(renderer, this);
-	}
+	this->rigidBody.update(this->hitBox, deltaTime);
 }
 
 Rect& Entity::getHitBox() 
 {
+	std::cout << "method Entity::getHitBox() " << std::endl;
 	return this->hitBox;
 }
 

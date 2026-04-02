@@ -15,14 +15,12 @@ private:
 	Rect hitBox;
 	Stats statistics;
 	Weapon weapon;
-	IEntityPresenter* presenter;
 
 public:
 	Entity();
 	~Entity();
 
 	void update(Vector2 additionalForce, float deltaTime);
-	void present(SDL_Renderer* renderer);
 
 	Rect& getHitBox();
 	Rect getHitBox() const;
