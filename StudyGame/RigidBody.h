@@ -3,6 +3,7 @@
 #include "Vector2.h"
 #include "Rect.h"
 #include <memory>
+#include <iostream>
 
 class Rect;
 
@@ -28,7 +29,8 @@ public:
 	void update(Rect& hitBox, float deltaTime)
 	{
 		velocity += acceleration * deltaTime;
-
+		velocity *= 0.99;
+		std::cout << "velocity: " << velocity.x << ' ' << velocity.y << std::endl;
 		hitBox.x += velocity.x * deltaTime;
 		hitBox.y += velocity.y * deltaTime;
 
