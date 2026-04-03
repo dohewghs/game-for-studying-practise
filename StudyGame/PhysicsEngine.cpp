@@ -5,7 +5,8 @@ void PhysicsEngine::update(std::vector<Entity*>& entities, const Floor& floor, f
 {
 	for (Entity* entity : entities)
 	{
-		entity->update(this->gravityScale, deltaTime);
+		entity->applyImpulse(this->gravityScale);
+		entity->update({ 0,0 }, 0.1);
 	}
 
 	this->updateCollisions(entities, floor);
@@ -19,7 +20,7 @@ void PhysicsEngine::updateCollisions(std::vector<Entity*>& entities, const Floor
 
 		if (floor.updateGroundCollision(hitBox))
 		{
-			entity->setVelocityY(0);
+			entity->getRigiBody().setVelocityY(0);
 		}
 	}
 }
