@@ -22,7 +22,6 @@ void Entity::update(Vector2 force, float deltaTime)
 
 Rect& Entity::getHitBox() 
 {
-	std::cout << "method Entity::getHitBox() " << std::endl;
 	return this->hitBox;
 }
 
@@ -31,7 +30,18 @@ Rect Entity::getHitBox() const
 	return this->hitBox;
 }
 
-void Entity::setVelocityY(double value)
+RigidBody& Entity::getRigiBody()
 {
-	this->rigidBody.setVelocityY(value);
+	return this->rigidBody;
 }
+
+void Entity::applyImpulse(Vector2 force) 
+{
+	rigidBody.applyForce(force);
+}
+
+void Entity::applySpeed(Vector2 direction)
+{
+	rigidBody.applyForce(direction * this->statistics.walkingSpeed);
+}
+

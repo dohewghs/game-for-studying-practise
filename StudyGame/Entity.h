@@ -24,7 +24,9 @@ public:
 
 	Rect& getHitBox();
 	Rect getHitBox() const;
-	void setVelocityY(double value);
+	RigidBody& getRigiBody();
+	void applyImpulse(Vector2 force);
+	void applySpeed(Vector2 direction);
 
 	friend class BaseEntityPresenter;
 };
