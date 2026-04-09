@@ -5,7 +5,7 @@ void PhysicsEngine::update(std::vector<Entity*>& entities, const Floor& floor, f
 {
 	for (Entity* entity : entities)
 	{
-		entity->applyImpulse(this->gravityScale);
+		entity->applyImpulse(this->gravityScale * 0.5);
 		entity->update({ 0,0 }, 0.1);
 	}
 
@@ -24,6 +24,16 @@ void PhysicsEngine::updateCollisions(std::vector<Entity*>& entities, const Floor
 		if (floor.CollisionsX(hitBox, entity->getVelocity().x))
 			entity->setVelocityX(0);
 	}
+}
+
+void PhysicsEngine::handleInput(Entity& entity, Vector2& direction, const Floor& floor)
+{
+	if (direction.y > 0 && this->canJump(entity, floor))
+	{
+		entity.setVelocityY(-300);
+	}
+
+	entity.applySpeed(direction);
 }
 
 bool PhysicsEngine::canJump(const Entity& entity, const Floor& floor)
