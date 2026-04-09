@@ -42,17 +42,6 @@ void GameScene::present(SDL_Renderer*& renderer)
 
 void GameScene::update(float deltaTime)
 {
-	for (const Character& character : this->characters)
-	{
-		if (character)
-		{
-			Vector2 input = character.controller->getInputDirection();
-			//std::cout << "input direction: " << input.x << ' ' << input.y << std::endl;
-
-			character.entity->applySpeed(input);
-		}
-	}
-
 	std::vector<Entity*> entities = this->getEntities();
 
 	this->engine.update(entities, this->thisfloor, 0.1);
@@ -71,6 +60,16 @@ AppState GameScene::handleInput()
 			{
 				return AppState::close;
 			}
+		}
+	}
+
+	for (const Character& character : this->characters)
+	{
+		if (character)
+		{
+			Vector2 input = character.controller->getInputDirection();
+			//std::cout << "input direction: " << input.x << ' ' << input.y << std::endl;
+			this->engine.handleInput(*character.entity, input, this->thisfloor);
 		}
 	}
 	return AppState::game;

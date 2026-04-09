@@ -40,6 +40,10 @@ void Entity::applyImpulse(Vector2 force)
 }
 
 void Entity::applySpeed(Vector2 direction)
+{
+	rigidBody.applyForce(direction * this->statistics.walkingSpeed);
+}
+
 Vector2 Entity::getVelocity() const
 {
 	return this->rigidBody.getVelocity();
@@ -47,9 +51,6 @@ Vector2 Entity::getVelocity() const
 
 void Entity::setVelocityY(double value)
 {
-	rigidBody.applyForce(direction * this->statistics.walkingSpeed);
-}
-
 	this->rigidBody.setVelocityY(value);
 }
 

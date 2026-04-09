@@ -29,10 +29,11 @@ public:
 	void update(Rect& hitBox, float deltaTime)
 	{
 		velocity += acceleration * deltaTime;
-		velocity *= 0.99;
+		velocity *= 0.98;
+
 		std::cout << "velocity: " << velocity.x << ' ' << velocity.y << std::endl;
-		hitBox.x += velocity.x * deltaTime;
-		hitBox.y += velocity.y * deltaTime;
+		hitBox.x += velocity.x * deltaTime * 0.98;
+		hitBox.y += velocity.y * deltaTime * 0.1;
 
 		acceleration = Vector2(0, 0);
 	}
