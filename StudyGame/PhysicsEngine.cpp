@@ -17,10 +17,11 @@ void PhysicsEngine::updateCollisions(std::vector<Entity*>& entities, const Floor
 	{
 		Rect& hitBox = entity->getHitBox();
 
-		if (floor.updateGroundCollision(hitBox))
-		{
+		if (floor.CollisionsY(hitBox, entity->getVelocity().y))
 			entity->setVelocityY(0);
-		}
+
+		if (floor.CollisionsX(hitBox, entity->getVelocity().x))
+			entity->setVelocityX(0);
 	}
 }
 
