@@ -24,7 +24,10 @@ public:
 
 	Rect& getHitBox();
 	Rect getHitBox() const;
+	Vector2 getVelocity() const;
 	void setVelocityY(double value);
+	void setVelocityX(double value);
+
 
 	friend class BaseEntityPresenter;
 };

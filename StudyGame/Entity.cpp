@@ -1,7 +1,6 @@
 #include "Entity.h"
 #include "IController.h"
 #include "Floor.h"
-#include <iostream>
 
 Entity::Entity() :
 	hitBox(0, 0, 50, 50),
@@ -22,7 +21,6 @@ void Entity::update(Vector2 force, float deltaTime)
 
 Rect& Entity::getHitBox() 
 {
-	std::cout << "method Entity::getHitBox() " << std::endl;
 	return this->hitBox;
 }
 
@@ -31,7 +29,17 @@ Rect Entity::getHitBox() const
 	return this->hitBox;
 }
 
+Vector2 Entity::getVelocity() const
+{
+	return this->rigidBody.getVelocity();
+}
+
 void Entity::setVelocityY(double value)
 {
 	this->rigidBody.setVelocityY(value);
+}
+
+void Entity::setVelocityX(double value)
+{
+	this->rigidBody.setVelocityX(value);
 }
