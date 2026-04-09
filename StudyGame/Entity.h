@@ -24,6 +24,9 @@ public:
 
 	Rect& getHitBox();
 	Rect getHitBox() const;
+	RigidBody& getRigiBody();
+	void applyImpulse(Vector2 force);
+	void applySpeed(Vector2 direction);
 	Vector2 getVelocity() const;
 	void setVelocityY(double value);
 	void setVelocityX(double value);

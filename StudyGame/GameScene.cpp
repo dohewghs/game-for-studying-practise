@@ -2,6 +2,7 @@
 #include "UserController.h"
 #include "BaseFloorPresenter.h"
 #include "BaseEntityPresenter.h"
+#include <iostream>
 
 std::vector<Entity*> GameScene::getEntities()
 {
@@ -41,9 +42,22 @@ void GameScene::present(SDL_Renderer*& renderer)
 
 void GameScene::update(float deltaTime)
 {
+	for (const Character& character : this->characters)
+	{
+		if (character)
+		{
+			Vector2 input = character.controller->getInputDirection();
+			//std::cout << "input direction: " << input.x << ' ' << input.y << std::endl;
+
+			character.entity->applySpeed(input);
+		}
+	}
+
 	std::vector<Entity*> entities = this->getEntities();
 
 	this->engine.update(entities, this->thisfloor, 0.1);
+
+	
 }
 
 AppState GameScene::handleInput()

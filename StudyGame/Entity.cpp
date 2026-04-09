@@ -29,6 +29,17 @@ Rect Entity::getHitBox() const
 	return this->hitBox;
 }
 
+RigidBody& Entity::getRigiBody()
+{
+	return this->rigidBody;
+}
+
+void Entity::applyImpulse(Vector2 force) 
+{
+	rigidBody.applyForce(force);
+}
+
+void Entity::applySpeed(Vector2 direction)
 Vector2 Entity::getVelocity() const
 {
 	return this->rigidBody.getVelocity();
@@ -36,6 +47,9 @@ Vector2 Entity::getVelocity() const
 
 void Entity::setVelocityY(double value)
 {
+	rigidBody.applyForce(direction * this->statistics.walkingSpeed);
+}
+
 	this->rigidBody.setVelocityY(value);
 }
 
