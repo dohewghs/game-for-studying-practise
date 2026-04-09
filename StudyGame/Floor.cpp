@@ -23,7 +23,7 @@ bool Floor::hasIntersection(const Rect& rect) const
 	return false;
 }
 
-bool Floor::updateGroundCollision(Rect& rect) const
+bool Floor::CollisionsY(Rect& rect, double VelocityY) const
 {
 	bool isNeedToZeroVelocity = false;
 
@@ -31,9 +31,40 @@ bool Floor::updateGroundCollision(Rect& rect) const
 	{
 		if (HasIntersection(floorRect, rect))
 		{
-			double overlapY = (rect.y + rect.height) - floorRect.y;
-			rect.y -= overlapY;
+			if (VelocityY > 0)
+			{
+				rect.y = floorRect.y - rect.height;
+			}
+			// If moving up, snap to bottom of floor
+			else if (VelocityY < 0)
+			{
+				rect.y = floorRect.y + rect.height;
+			}
 			
+			isNeedToZeroVelocity = true;
+			break;
+		}
+	}
+	return isNeedToZeroVelocity;
+}
+
+bool Floor::CollisionsX(Rect& rect, double VelocityX) const
+{
+	bool isNeedToZeroVelocity = false;
+
+	for (const Rect& floorRect : this->floor)
+	{
+		if (HasIntersection(floorRect, rect))
+		{
+			if (VelocityX > 0)
+			{
+				rect.x = floorRect.x - rect.width;
+			}
+			else if (VelocityX < 0)
+			{
+				rect.x = floorRect.x + floorRect.width;
+			}
+
 			isNeedToZeroVelocity = true;
 			break;
 		}

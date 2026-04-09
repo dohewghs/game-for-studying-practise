@@ -17,7 +17,9 @@ public:
 	~Floor();
 
 	bool hasIntersection(const Rect& rect) const;
-	bool updateGroundCollision(Rect& rect) const;
+	bool CollisionsY(Rect& rect, double VelocityY) const;
+	bool CollisionsX(Rect& rect, double VelocityX) const;
+
 
 	void present(SDL_Renderer*& renderer);
 	friend class BaseFloorPresenter;
