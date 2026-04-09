@@ -39,4 +39,14 @@ public:
 	{
 		this->velocity.y = value;
 	}
+
+	void setVelocityX(double value)
+	{
+		this->velocity.x = value;
+	}
+
+	Vector2 getVelocity() const
+	{
+		return this->velocity;
+	}
 };
