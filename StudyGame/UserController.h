@@ -23,11 +23,19 @@ public:
 			res.x = -1;
 		}
 
+		return res;
+	}
+
+	bool isJumpPressed() override
+	{
+		int numkeys;
+		const bool* state = SDL_GetKeyboardState(&numkeys);
+
 		if (state[SDL_SCANCODE_SPACE])
 		{
-			res.y = 1;
+			return true;
 		}
 
-		return res;
+		return false;
 	}
 };
