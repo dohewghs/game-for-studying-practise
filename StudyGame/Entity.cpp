@@ -12,17 +12,12 @@ Entity::Entity() :
 
 Entity::~Entity() = default;
 
-void Entity::update(Vector2 force, float deltaTime)
+void Entity::update(double deltaTime)
 {
-	rigidBody.applyForce(force);
-
-	this->rigidBody.update(this->hitBox, deltaTime);
+	this->rigidBody.update(deltaTime);
 }
 
-Rect& Entity::getHitBox() 
-{
-	return this->hitBox;
-}
+Rect& Entity::getHitBox() {	return this->hitBox; }
 
 Rect Entity::getHitBox() const
 {
@@ -34,14 +29,9 @@ RigidBody& Entity::getRigiBody()
 	return this->rigidBody;
 }
 
-void Entity::applyImpulse(Vector2 force) 
-{
-	rigidBody.applyForce(force);
-}
-
 void Entity::applySpeed(Vector2 direction)
 {
-	rigidBody.applyForce(direction * this->statistics.walkingSpeed);
+	rigidBody.setAcceleration(direction * this->statistics.walkingSpeed);
 }
 
 Vector2 Entity::getVelocity() const
@@ -57,4 +47,10 @@ void Entity::setVelocityY(double value)
 void Entity::setVelocityX(double value)
 {
 	this->rigidBody.setVelocityX(value);
+}
+
+void Entity::setPosition(Vector2 position)
+{
+	this->hitBox.x = position.x;
+	this->hitBox.y = position.y;
 }

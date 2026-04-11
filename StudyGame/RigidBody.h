@@ -20,22 +20,18 @@ public:
 	{
 	}
 
-	void applyForce(const Vector2& force) 
+	void setAcceleration(const Vector2& force) 
 	{
 		this->acceleration.x += force.x; 
 		this->acceleration.y += force.y;
 	}
 
-	void update(Rect& hitBox, float deltaTime)
+	void update(double deltaTime)
 	{
-		velocity += acceleration * deltaTime;
-		velocity *= 0.98;
+		this->velocity += acceleration * deltaTime;
+		this->velocity.x *= 0.98;
 
-		std::cout << "velocity: " << velocity.x << ' ' << velocity.y << std::endl;
-		hitBox.x += velocity.x * deltaTime * 0.98;
-		hitBox.y += velocity.y * deltaTime * 0.1;
-
-		acceleration = Vector2(0, 0);
+		acceleration = { 0,0 };
 	}
 
 	void setVelocityY(double value)
