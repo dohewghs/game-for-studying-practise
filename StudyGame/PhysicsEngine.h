@@ -1,18 +1,14 @@
 #pragma once
 #include <vector>
 #include "Entity.h"
+#include <iostream>
+
 class Floor;
 
 class PhysicsEngine
 {
-private:
-	Vector2 gravityScale{ 0, 9.81 };
-
 public:
-	void update(std::vector<Entity*>& entities, const Floor& floor, float deltaTime);
-	void updateCollisions(std::vector<Entity*>& entities, const Floor& floor);
-
-	void handleInput(Entity& entity, Vector2& direction, const Floor& floor);
+	std::pair<Vector2, Vector2> getAvailableMovement(Entity& entity, const Floor& floor, double deltaTime);
 
 	bool canJump(const Entity& entity, const Floor& floor);
 };

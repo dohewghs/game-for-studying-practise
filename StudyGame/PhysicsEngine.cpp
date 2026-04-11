@@ -1,45 +1,36 @@
 #include "PhysicsEngine.h"
 #include "Floor.h"
 
-void PhysicsEngine::update(std::vector<Entity*>& entities, const Floor& floor, float deltaTime)
+std::pair<Vector2, Vector2> PhysicsEngine::getAvailableMovement(Entity& entity, const Floor& floor, double deltaTime)
 {
-	for (Entity* entity : entities)
+	double GRAVITY_SCALE = 9.81 * 0.1;
+
+	Vector2 finalVelocity = entity.getVelocity();
+	finalVelocity.y += GRAVITY_SCALE * deltaTime;
+	
+	Rect testHitBox = Rect(entity.getHitBox());
+
+
+	testHitBox.x += finalVelocity.x * deltaTime;
+
+	if (floor.CollisionsX(testHitBox, finalVelocity.x))
+		finalVelocity.x = 0;
+
+	testHitBox.y += (finalVelocity.y) * deltaTime;
+
+	if (floor.CollisionsY(testHitBox, finalVelocity.y))
 	{
-		entity->applyImpulse(this->gravityScale * 0.5);
-		entity->update({ 0,0 }, 0.1);
+		finalVelocity.y = 0;
 	}
-
-	this->updateCollisions(entities, floor);
-}
-
-void PhysicsEngine::updateCollisions(std::vector<Entity*>& entities, const Floor& floor)
-{
-	for (Entity* entity : entities)
-	{
-		Rect& hitBox = entity->getHitBox();
-
-		if (floor.CollisionsY(hitBox, entity->getVelocity().y))
-			entity->setVelocityY(0);
-
-		if (floor.CollisionsX(hitBox, entity->getVelocity().x))
-			entity->setVelocityX(0);
-	}
-}
-
-void PhysicsEngine::handleInput(Entity& entity, Vector2& direction, const Floor& floor)
-{
-	if (direction.y > 0 && this->canJump(entity, floor))
-	{
-		entity.setVelocityY(-300);
-	}
-
-	entity.applySpeed(direction);
+		
+	
+	return { Vector2(testHitBox.x, testHitBox.y), finalVelocity};
 }
 
 bool PhysicsEngine::canJump(const Entity& entity, const Floor& floor)
 {
 	Rect sensor = entity.getHitBox();
-	sensor.y += 1;
+	sensor.y += 0.1;
 
 	return floor.hasIntersection(sensor);
 }
