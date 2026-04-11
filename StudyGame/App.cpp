@@ -42,7 +42,7 @@ void App::run()
 			break;
 		}
 
-		this->scenesManager.getScene()->update(0.1);
+		currentScene->update(0.07);
 
 		this->scenesManager.changeScene(state);
 
