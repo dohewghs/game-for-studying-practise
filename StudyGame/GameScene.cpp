@@ -33,8 +33,7 @@ void GameScene::present(SDL_Renderer*& renderer)
 {
 	for (Character& character : this->characters)
 	{
-		if (character)
-			character.presenter->present(renderer, character.entity);
+		character.present(renderer);
 	}
 
 	this->thisfloor.present(renderer);
