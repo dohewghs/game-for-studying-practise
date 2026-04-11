@@ -14,7 +14,6 @@ class GameScene : public IScene
 
 	GameUI HUD;
 
-	std::vector<Entity*> getEntities();
 public:
 	GameScene();
 	~GameScene();

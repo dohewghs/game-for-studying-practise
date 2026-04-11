@@ -1,21 +1,9 @@
 #include "GameScene.h"
+#include "Character.h"
 #include "UserController.h"
 #include "BaseFloorPresenter.h"
 #include "BaseEntityPresenter.h"
 #include <iostream>
-
-std::vector<Entity*> GameScene::getEntities()
-{
-	std::vector<Entity*> res = std::vector<Entity*>();
-
-	for (Character& character : this->characters)
-	{
-		if (character)
-			res.push_back(character.entity);
-	}
-
-	return res;
-}
 
 GameScene::GameScene() :
 	characters(),
@@ -41,11 +29,22 @@ void GameScene::present(SDL_Renderer*& renderer)
 
 void GameScene::update(float deltaTime)
 {
-	std::vector<Entity*> entities = this->getEntities();
+	for (Character& character : this->characters)
+	{
+		character.update(deltaTime);
 
-	this->engine.update(entities, this->thisfloor, 0.1);
+		Entity* entity = character.getEntity();
+		if (!entity)
+			continue;
 
-	
+		auto [coords, velocity] = this->engine.getAvailableMovement(*entity, this->thisfloor, deltaTime);
+
+		entity->setPosition(coords);
+		entity->setVelocityX(velocity.x);
+		entity->setVelocityY(velocity.y);
+
+		entity->isCanJump = this->engine.canJump(*entity, this->thisfloor);
+	}
 }
 
 AppState GameScene::handleInput()
@@ -62,14 +61,9 @@ AppState GameScene::handleInput()
 		}
 	}
 
-	for (const Character& character : this->characters)
+	for (Character& character : this->characters)
 	{
-		if (character)
-		{
-			Vector2 input = character.controller->getInputDirection();
-			//std::cout << "input direction: " << input.x << ' ' << input.y << std::endl;
-			this->engine.handleInput(*character.entity, input, this->thisfloor);
-		}
+		character.handleInput();
 	}
 	return AppState::game;
 }
