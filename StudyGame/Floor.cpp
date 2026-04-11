@@ -4,7 +4,8 @@
 Floor::Floor(IFloorPresenter* _presenter)
 {
 	this->floor = std::vector<Rect>();
-	floor.push_back(Rect(0, 200, 500, 10));
+	floor.push_back(Rect(0, 400, 500, 10));
+	floor.push_back(Rect(300, 300, 10, 100));
 
 	this->presenter = _presenter;
 }
