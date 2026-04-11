@@ -1,12 +1,13 @@
 #pragma once
 #include "Entity.h"
 
-struct Character
+class Character
 {
+private:
 	Entity* entity = nullptr;
 	IController* controller = nullptr;
 	IEntityPresenter* presenter = nullptr;
-
+public:
 	Character(Entity* _entity = nullptr, IController* _controller = nullptr, IEntityPresenter* _presenter = nullptr) :
 		entity(_entity),
 		controller(_controller),
@@ -66,4 +67,33 @@ struct Character
 		this->presenter->present(renderer, this->entity);
 	}
 
+	void update(double deltaTime)
+	{
+		if (!this->entity)
+			return;
+
+		this->entity->update(deltaTime);
+	}
+
+	void handleInput()
+	{
+		if (!this->controller || !this->entity)
+			return;
+
+		Vector2 inputDirection = this->controller->getInputDirection();
+
+		this->entity->applySpeed(inputDirection);
+
+		std::cout << "Coords: " << entity->getHitBox().x << ' ' << entity->getHitBox().y << '\n';
+
+		if (this->entity->isCanJump && this->controller->isJumpPressed())
+		{
+			this->entity->setVelocityY(-15);
+		}
+	}
+
+	Entity* getEntity()
+	{
+		return this->entity;
+	}
 };
