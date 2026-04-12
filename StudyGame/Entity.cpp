@@ -1,5 +1,6 @@
 #include "Entity.h"
 #include "IController.h"
+#include "BaseEntityPresenter.h"
 #include "Floor.h"
 
 Entity::Entity() :
@@ -8,6 +9,7 @@ Entity::Entity() :
 	statistics(),
 	weapon()
 {
+	this->presenter = new BaseEntityPresenter();
 }
 
 Entity::~Entity() = default;
@@ -15,6 +17,7 @@ Entity::~Entity() = default;
 void Entity::applyAcceleration(double deltaTime)
 {
 	this->rigidBody.applyAcceleration(deltaTime);
+	this->weapon.update(deltaTime);
 }
 
 Rect& Entity::getHitBox() {	return this->hitBox; }
@@ -48,4 +51,21 @@ void Entity::setPosition(Vector2 position)
 {
 	this->hitBox.x = position.x;
 	this->hitBox.y = position.y;
+
+	this->weapon.setCoords(position += {30, 30});
+}
+
+void Entity::present(SDL_Renderer* renderer)
+{
+	if (!this->presenter)
+		return;
+
+	this->presenter->present(renderer, this);
+
+	this->weapon.present(renderer);
+}
+
+void Entity::useWeapon()
+{
+	this->weapon.rotate();
 }

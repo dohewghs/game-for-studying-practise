@@ -16,6 +16,7 @@ private:
 	Stats statistics;
 	Weapon weapon;
 
+	IEntityPresenter* presenter = nullptr;
 public:
 	Entity();
 	~Entity();
@@ -28,13 +29,15 @@ public:
 	Rect getHitBox() const;
 	RigidBody& getRigiBody();
 	Vector2 getVelocity() const;
+	const Stats getStats() { return this->statistics; }
 
 	void applySpeed(Vector2 direction);
 
-	
 	void setVelocity(Vector2 _velocity);
 	void setPosition(Vector2 position);
 
-	const Stats getStats() { return this->statistics; }
+	void present(SDL_Renderer* renderer);
+	void useWeapon();
+
 	friend class BaseEntityPresenter;
 };

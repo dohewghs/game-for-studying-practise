@@ -6,13 +6,11 @@ class Character
 private:
 	Entity* entity = nullptr;
 	IController* controller = nullptr;
-	IEntityPresenter* presenter = nullptr;
 
 public:
 	Character(Entity* _entity = nullptr, IController* _controller = nullptr, IEntityPresenter* _presenter = nullptr) :
 		entity(_entity),
-		controller(_controller),
-		presenter(_presenter)
+		controller(_controller)
 	{
 	};
 
@@ -22,23 +20,19 @@ public:
 	{
 		entity = other.entity;
 		controller = other.controller;
-		presenter = other.presenter;
 		other.entity = nullptr;
 		other.controller = nullptr;
-		other.presenter = nullptr;
 	}
 
 	Character& operator=(Character&& other) noexcept
 	{
 		if (this != &other)
 		{
-			delete entity; delete controller; delete presenter;
+			delete entity; delete controller; 
 			entity = other.entity;
 			controller = other.controller;
-			presenter = other.presenter;
 			other.entity = nullptr;
 			other.controller = nullptr;
-			other.presenter = nullptr;
 		}
 		return *this;
 	}
@@ -48,24 +42,21 @@ public:
 		if (this->controller)
 			delete controller;
 
-		if (this->presenter)
-			delete presenter;
-
 		if (this->entity)
 			delete entity;
 	}
 
 	operator bool() const
 	{
-		return (this->entity) && (this->controller) && (this->presenter);
+		return (this->entity) && (this->controller);
 	}
 
 	void present(SDL_Renderer* renderer)
 	{
-		if (!*this)
+		if (!this->entity)
 			return;
 
-		this->presenter->present(renderer, this->entity);
+		this->entity->present(renderer);
 	}
 
 	void applyAcceleration(double deltaTime)
@@ -93,6 +84,12 @@ public:
 			velocity.y = -15;
 
 			this->entity->setVelocity(velocity);
+		}
+
+		if (this->controller->isAttack())
+		{
+			std::cout << "here-------------\n";
+			this->entity->useWeapon();
 		}
 	}
 
