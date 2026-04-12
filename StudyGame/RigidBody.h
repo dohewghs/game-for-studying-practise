@@ -26,7 +26,7 @@ public:
 		this->acceleration.y += force.y;
 	}
 
-	void update(double deltaTime)
+	void applyAcceleration(double deltaTime)
 	{
 		this->velocity += acceleration * deltaTime;
 		this->velocity.x *= 0.98;
@@ -34,14 +34,9 @@ public:
 		acceleration = { 0,0 };
 	}
 
-	void setVelocityY(double value)
+	void setVelocity(Vector2 value)
 	{
-		this->velocity.y = value;
-	}
-
-	void setVelocityX(double value)
-	{
-		this->velocity.x = value;
+		this->velocity = value;
 	}
 
 	Vector2 getVelocity() const

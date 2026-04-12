@@ -12,9 +12,9 @@ Entity::Entity() :
 
 Entity::~Entity() = default;
 
-void Entity::update(double deltaTime)
+void Entity::applyAcceleration(double deltaTime)
 {
-	this->rigidBody.update(deltaTime);
+	this->rigidBody.applyAcceleration(deltaTime);
 }
 
 Rect& Entity::getHitBox() {	return this->hitBox; }
@@ -39,14 +39,9 @@ Vector2 Entity::getVelocity() const
 	return this->rigidBody.getVelocity();
 }
 
-void Entity::setVelocityY(double value)
+void Entity::setVelocity(Vector2 _velocity)
 {
-	this->rigidBody.setVelocityY(value);
-}
-
-void Entity::setVelocityX(double value)
-{
-	this->rigidBody.setVelocityX(value);
+	this->rigidBody.setVelocity(_velocity);
 }
 
 void Entity::setPosition(Vector2 position)

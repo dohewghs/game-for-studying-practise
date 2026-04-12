@@ -7,6 +7,7 @@ private:
 	Entity* entity = nullptr;
 	IController* controller = nullptr;
 	IEntityPresenter* presenter = nullptr;
+
 public:
 	Character(Entity* _entity = nullptr, IController* _controller = nullptr, IEntityPresenter* _presenter = nullptr) :
 		entity(_entity),
@@ -67,12 +68,12 @@ public:
 		this->presenter->present(renderer, this->entity);
 	}
 
-	void update(double deltaTime)
+	void applyAcceleration(double deltaTime)
 	{
 		if (!this->entity)
 			return;
 
-		this->entity->update(deltaTime);
+		this->entity->applyAcceleration(deltaTime);
 	}
 
 	void handleInput()
@@ -88,7 +89,10 @@ public:
 
 		if (this->entity->isCanJump && this->controller->isJumpPressed())
 		{
-			this->entity->setVelocityY(-15);
+			Vector2 velocity = this->entity->getVelocity();
+			velocity.y = -15;
+
+			this->entity->setVelocity(velocity);
 		}
 	}
 

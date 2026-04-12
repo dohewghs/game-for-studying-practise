@@ -31,7 +31,7 @@ void GameScene::update(float deltaTime)
 {
 	for (Character& character : this->characters)
 	{
-		character.update(deltaTime);
+		character.applyAcceleration(deltaTime);
 
 		Entity* entity = character.getEntity();
 		if (!entity)
@@ -40,8 +40,7 @@ void GameScene::update(float deltaTime)
 		auto [coords, velocity] = this->engine.getAvailableMovement(*entity, this->thisfloor, deltaTime);
 
 		entity->setPosition(coords);
-		entity->setVelocityX(velocity.x);
-		entity->setVelocityY(velocity.y);
+		entity->setVelocity(velocity);
 
 		entity->isCanJump = this->engine.canJump(*entity, this->thisfloor);
 	}

@@ -22,7 +22,7 @@ public:
 
 	bool isCanJump = false;
 
-	void update(double deltaTime);
+	void applyAcceleration(double deltaTime);
 
 	Rect& getHitBox();
 	Rect getHitBox() const;
@@ -32,8 +32,7 @@ public:
 	void applySpeed(Vector2 direction);
 
 	
-	void setVelocityY(double value);
-	void setVelocityX(double value);
+	void setVelocity(Vector2 _velocity);
 	void setPosition(Vector2 position);
 
 	const Stats getStats() { return this->statistics; }
