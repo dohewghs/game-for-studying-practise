@@ -38,4 +38,17 @@ public:
 
 		return false;
 	}
+
+	bool isAttack() override
+	{
+		int numkeys;
+		const bool* state = SDL_GetKeyboardState(&numkeys);
+
+		if (state[SDL_SCANCODE_BACKSPACE])
+		{
+			return true;
+		}
+
+		return false;
+	}
 };

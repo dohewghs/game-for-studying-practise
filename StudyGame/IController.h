@@ -8,4 +8,5 @@ public:
 	
 	virtual Vector2 getInputDirection() = 0;
 	virtual bool isJumpPressed() = 0;
+	virtual bool isAttack() = 0;
 };
