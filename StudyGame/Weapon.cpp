@@ -1,6 +1,11 @@
 #include "Weapon.h"
 #include "Entity.h"
 
+double Weapon::getDamage() const
+{
+	return this->damage;
+}
+
 void Weapon::update(double deltaTime)
 {
 	if (this->rotateWeapon)
@@ -12,6 +17,7 @@ void Weapon::update(double deltaTime)
 	{
 		angle = 0;
 		this->rotateWeapon = false;
+		this->isNowUsing = false;
 	}
 }
 
@@ -29,10 +35,26 @@ void Weapon::present(SDL_Renderer* renderer)
 	this->presenter->present(renderer, this);
 }
 
-void Weapon::rotate()
+void Weapon::rotateAndUse()
 {
 	if (this->rotateWeapon)
 		return;
 
 	this->rotateWeapon = true;
+	this->isNowUsing = true;
+}
+
+bool Weapon::isUsing()
+{
+	return this->isNowUsing;
+}
+
+bool Weapon::isHit(const Rect& rect)
+{
+	if (HasIntersection(this->hitBox, rect))
+	{
+		this->isNowUsing = false;
+		return true;
+	}
+	return false;
 }

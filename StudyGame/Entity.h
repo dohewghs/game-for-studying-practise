@@ -37,7 +37,11 @@ public:
 	void setPosition(Vector2 position);
 
 	void present(SDL_Renderer* renderer);
+
 	void useWeapon();
+	bool isUsingWeapon();
+	void attack(Entity* entity);
+	void applyDamage(double damagePoints);
 
 	friend class BaseEntityPresenter;
 };

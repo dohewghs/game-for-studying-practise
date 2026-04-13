@@ -12,7 +12,11 @@ Entity::Entity() :
 	this->presenter = new BaseEntityPresenter();
 }
 
-Entity::~Entity() = default;
+Entity::~Entity()
+{
+	if (this->presenter)
+		delete this->presenter;
+}
 
 void Entity::applyAcceleration(double deltaTime)
 {
@@ -67,5 +71,30 @@ void Entity::present(SDL_Renderer* renderer)
 
 void Entity::useWeapon()
 {
-	this->weapon.rotate();
+	this->weapon.rotateAndUse();
+}
+
+bool Entity::isUsingWeapon()
+{
+	return this->weapon.isUsing();
+}
+
+void Entity::attack(Entity* entity)
+{
+	Rect enemyRect = entity->getHitBox();
+	if (this->weapon.isHit(enemyRect))
+	{
+		entity->applyDamage(this->weapon.getDamage() * this->statistics.damageCoef);
+		std::cout << "YYYYYEEEEEEEEEEEEEEEE" << '\n';
+
+	}
+}
+
+void Entity::applyDamage(double damagePoints)
+{
+	int hp = this->statistics.hp;
+
+	hp = (hp >= damagePoints)? hp - damagePoints : 0;
+
+	this->statistics.hp = hp;
 }
