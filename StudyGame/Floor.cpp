@@ -10,7 +10,11 @@ Floor::Floor(IFloorPresenter* _presenter)
 	this->presenter = _presenter;
 }
 
-Floor::~Floor() = default;
+Floor::~Floor()
+{
+	if (this->presenter)
+		delete this->presenter;
+}
 
 bool Floor::hasIntersection(const Rect& rect) const
 {
