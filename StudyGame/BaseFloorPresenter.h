@@ -7,6 +7,8 @@ class BaseFloorPresenter : public IFloorPresenter
 {
 	
 public:
+	~BaseFloorPresenter() = default;
+
 	void present(SDL_Renderer*& renderer, const Floor* floor) override
 	{
 		for (const Rect& item : floor->floor)

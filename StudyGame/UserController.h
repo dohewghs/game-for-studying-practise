@@ -6,6 +6,8 @@
 class UserController : public IController
 {
 public:
+	~UserController() = default;
+
 	Vector2 getInputDirection() override
 	{
 		Vector2 res(0, 0);
