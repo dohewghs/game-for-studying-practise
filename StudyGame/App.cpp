@@ -30,7 +30,7 @@ void App::run()
 
 	while (isRunning)
 	{
-		auto currentScene = this->scenesManager.getScene();
+		IScene* currentScene = this->scenesManager.getScene();
 
 		AppState state = currentScene->handleInput();
 

@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "Character.h"
 #include "UserController.h"
+#include "ComputerController.h"
 #include "BaseFloorPresenter.h"
 #include "BaseEntityPresenter.h"
 #include <iostream>
@@ -12,7 +13,8 @@ GameScene::GameScene() :
 	thisfloor(new BaseFloorPresenter)
 {
 	this->characters = std::vector<Character>(10);
-	characters[0] = Character(new Entity(), new UserController(), new BaseEntityPresenter());
+	characters[0] = Character(new Entity(), new UserController());
+	characters[1] = Character(new Entity(), new ComputerController());
 }
 
 GameScene::~GameScene() = default;
@@ -43,6 +45,22 @@ void GameScene::update(float deltaTime)
 		entity->setVelocity(velocity);
 
 		entity->isCanJump = this->engine.canJump(*entity, this->thisfloor);
+
+		if (entity->isUsingWeapon())
+		{
+			for (Character& character : this->characters)
+			{
+				Entity* enemy = character.getEntity();
+
+				if (!enemy)
+					continue;
+
+				if (enemy == entity)
+					continue;
+
+				entity->attack(enemy);
+			}
+		}
 	}
 }
 
