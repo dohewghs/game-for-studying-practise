@@ -25,7 +25,9 @@ public:
 		
 		SDL_FColor red = { 0.0f, 0.0f, 0.0f, 1.0f };
 		
-		DrawRotatedRect(renderer, createWhitePixel(renderer), entityRect, *this->angle, red);
+		SDL_Texture* pixel = createWhitePixel(renderer);
+		DrawRotatedRect(renderer, pixel, entityRect, *this->angle, red);
+		SDL_DestroyTexture(pixel);
 	}
 
 	void DrawRotatedRect(SDL_Renderer* renderer, SDL_Texture* whitePixel,
