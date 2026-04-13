@@ -8,7 +8,7 @@ private:
 	IController* controller = nullptr;
 
 public:
-	Character(Entity* _entity = nullptr, IController* _controller = nullptr, IEntityPresenter* _presenter = nullptr) :
+	Character(Entity* _entity = nullptr, IController* _controller = nullptr) :
 		entity(_entity),
 		controller(_controller)
 	{
@@ -53,6 +53,8 @@ public:
 
 	void present(SDL_Renderer* renderer)
 	{
+		//std::cout << "Coords: " << entity->getHitBox().x << ' ' << entity->getHitBox().y << '\n';
+
 		if (!this->entity)
 			return;
 
@@ -76,8 +78,6 @@ public:
 
 		this->entity->applySpeed(inputDirection);
 
-		std::cout << "Coords: " << entity->getHitBox().x << ' ' << entity->getHitBox().y << '\n';
-
 		if (this->entity->isCanJump && this->controller->isJumpPressed())
 		{
 			Vector2 velocity = this->entity->getVelocity();
@@ -88,7 +88,6 @@ public:
 
 		if (this->controller->isAttack())
 		{
-			std::cout << "here-------------\n";
 			this->entity->useWeapon();
 		}
 	}
