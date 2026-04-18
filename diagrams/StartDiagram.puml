@@ -1,0 +1,168 @@
+@startuml
+
+class Entity
+{
+RigidBody body
+Rect hitBox
+Stats statistics
+Weapon weapon
+IController controler
+
+move(Vector2 direction, double coeffitient)
+attack(Entity enemy)
+}
+
+Entity <|.. IPresenter
+Entity *-- Weapon
+Entity *-- IController
+Entity *-- Stats
+Entity *-- Rect
+Entity *-- RigidBody 
+
+class RigidBody
+{
+Rect* hitBox
+double GravityScale
+
+vector2 velocity
+vector2 acceleration
+double friction
+
+move(vector2 direction)
+}
+RigidBody *-- Vector2
+
+class Weapon
+{
+double damage
+
+use()
+}
+
+class Stats
+{
+double hp
+double maxHp
+
+double luck
+double damageCoef
+double speedCoef
+
+double attackSpeed
+}
+
+class Rect
+{
+double x, y
+double width, height
+
+intersect(Rect other)
+}
+
+class Vector2
+{
+double x, y
+}
+
+Interface IPresenter
+{
+present()
+}
+
+Interface IController
+{
+input()
+
+isJumpPressed()
+}
+
+class KeyBoardController
+{
+input()
+
+isJumpPressed()
+}
+
+class AIController
+{
+input()
+
+isJumpPressed()
+}
+
+KeyBoardController <|.. IController
+AIController <|.. IController
+
+class Floor
+{
+Rect[] rects
+}
+
+Floor *-- Rect
+Floor <|.. IPresenter
+
+class PhysicsEngine
+{
+Floor floor
+
+update(Entity[] entities)
+updateCollisions()
+}
+
+PhysicsEngine *-- Floor
+
+class World
+{
+Entity[] players
+IPresenter presenter
+PhysicsEngine engine
+
+GameUI HUD
+bool isPaused
+
+update()
+handleInput()
+}
+
+World *-- IPresenter 
+World *-- PhysicsEngine 
+World *-- GameUI
+
+
+interface IScene
+{
+update()
+handleInput()
+}
+IScene <|.. IPresenter
+
+class MenuScene 
+{
+}
+MenuScene <|.. IScene
+World <|.. IScene
+
+class SettingsScene
+{
+}
+SettingsScene <|.. IScene
+
+class GameOverScene
+{
+}
+GameOverScene<|.. IScene
+
+class SceneManager
+{
+IScene* currentScene
+
+changeScene(IScene* newScene)
+}
+SceneManager *-- IScene
+
+class GameUI
+{
+present(Entity* entity)
+}
+
+@enduml
