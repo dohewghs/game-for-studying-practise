@@ -29,12 +29,12 @@ bool HasIntersection(const Rect& first, const Rect& second)
 
 SDL_Rect toSDLRect(const Rect& rect)
 {
-	return SDL_Rect(rect.x, rect.y, rect.width, rect.height);
+	return SDL_Rect(static_cast<int>(rect.x), static_cast<int>(rect.y), static_cast<int>(rect.width), static_cast<int>(rect.height));
 }
 
 SDL_FRect toSDLFRect(const Rect& rect)
 {
-	return SDL_FRect(rect.x, rect.y, rect.width, rect.height);
+	return SDL_FRect(static_cast<float>(rect.x), static_cast<float>(rect.y), static_cast<float>(rect.width), static_cast<float>(rect.height));
 }
 
 //Rect& Rect::operator=(const Rect& other)
