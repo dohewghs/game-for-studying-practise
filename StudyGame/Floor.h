@@ -1,5 +1,6 @@
 #pragma once
 #include "Rect.h"
+#include "Vector2.h"
 #include <vector>
 #include <SDL3/SDL_render.h>
 
@@ -20,6 +21,7 @@ public:
 	bool CollisionsY(Rect& rect, double VelocityY) const;
 	bool CollisionsX(Rect& rect, double VelocityX) const;
 
+	void moveOn(Vector2 offset);
 
 	void present(SDL_Renderer*& renderer);
 	friend class BaseFloorPresenter;

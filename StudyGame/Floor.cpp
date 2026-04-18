@@ -41,6 +41,8 @@ bool Floor::CollisionsY(Rect& rect, double VelocityY) const
 				rect.y = floorRect.y - rect.height;
 			}
 			// If moving up, snap to bottom of floor
+
+			
 			else if (VelocityY < 0)
 			{
 				rect.y = floorRect.y + rect.height;
@@ -80,4 +82,13 @@ bool Floor::CollisionsX(Rect& rect, double VelocityX) const
 void Floor::present(SDL_Renderer*& renderer)
 {
 	this->presenter->present(renderer, this);
+}
+
+void Floor::moveOn(Vector2 offset)
+{
+	for (Rect& rect : this->floor)
+	{
+		rect.x += offset.x;
+		rect.y += offset.y;
+	}
 }
