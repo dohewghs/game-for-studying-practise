@@ -1,10 +1,10 @@
-#include "MenuScene.h"
+#include "SettingsScene.h"
 #include <SDL3/SDL.h>
 #include <imgui.h>
 #include <imgui_impl_sdl3.h>
 #include <imgui_impl_sdlrenderer3.h>
 
-void MenuScene::present(SDL_Renderer*& renderer)
+void SettingsScene::present(SDL_Renderer*& renderer)
 {
     ImGui::Render();
     ImDrawData* draw_data = ImGui::GetDrawData();
@@ -12,36 +12,28 @@ void MenuScene::present(SDL_Renderer*& renderer)
     ImGui_ImplSDLRenderer3_RenderDrawData(draw_data, renderer);
 }
 
-void MenuScene::update(float deltaTime)
+void SettingsScene::update(float deltaTime)
 {
     ImGui_ImplSDLRenderer3_NewFrame();
     ImGui_ImplSDL3_NewFrame();
     ImGui::NewFrame();
 
-    ImGui::Begin("Main Menu", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+    ImGui::Begin("Settings", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
 
     ImGui::SetWindowPos(ImVec2(100, 100), ImGuiCond_FirstUseEver);
     ImGui::SetWindowSize(ImVec2(200, 150));
 
-    if (ImGui::Button("Start Game", ImVec2(180, 40))) 
+    if (ImGui::Button("Back", ImVec2(180, 40)))
     {
-        this->nextState = AppState::game;
+        this->nextState = AppState::menu;
     }
 
-    if (ImGui::Button("Settings", ImVec2(180, 40))) 
-    {
-        this->nextState = AppState::settings;
-    }
-
-    if (ImGui::Button("Exit", ImVec2(180, 40))) 
-    {
-        this->nextState = AppState::close;
-    }
     ImGui::End();
-
 }
 
-AppState MenuScene::handleInput()
+
+
+AppState SettingsScene::handleInput()
 {
     SDL_Event event;
     while (SDL_PollEvent(&event))
@@ -57,7 +49,7 @@ AppState MenuScene::handleInput()
     return this->nextState;
 }
 
-void MenuScene::setState(AppState state)
+void SettingsScene::setState(AppState state)
 {
     this->nextState = state;
 }

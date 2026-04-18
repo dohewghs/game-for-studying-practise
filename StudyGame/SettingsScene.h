@@ -1,18 +1,20 @@
 #pragma once
 #include "IScene.h"
 
-class MenuScene : public IScene
+class SettingsScene : public IScene
 {
+private:
 	AppState nextState;
+
 public:
-	MenuScene() :
-		nextState(AppState::menu)
+	SettingsScene() :
+		nextState(AppState::settings)
 	{ }
-	~MenuScene() = default;
+
+	~SettingsScene() = default;
 
 	void present(SDL_Renderer*& renderer) override;
 	void update(float deltaTime) override;
 	AppState handleInput() override;
-
 	void setState(AppState state) override;
 };

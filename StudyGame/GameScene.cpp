@@ -10,7 +10,8 @@ GameScene::GameScene() :
 	characters(),
 	engine(),
 	HUD(),
-	thisfloor(new BaseFloorPresenter)
+	thisfloor(new BaseFloorPresenter),
+	nextState(AppState::game)
 {
 	this->characters = std::vector<Character>(10);
 	characters[0] = Character(new Entity(), new UserController());
@@ -85,6 +86,11 @@ AppState GameScene::handleInput()
 		character.handleInput();
 	}
 	return AppState::game;
+}
+
+void GameScene::setState(AppState state)
+{
+	this->nextState = state;
 }
 
 
