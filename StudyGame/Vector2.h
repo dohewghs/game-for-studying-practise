@@ -40,4 +40,14 @@ public:
 		res *= koef;     
 		return res;
 	}
+
+	Vector2& operator-=(const Vector2& other)
+	{
+		Vector2 _other = Vector2(other);
+
+		_other *= -1;
+		this->operator+=(_other);
+
+		return *this;
+	}
 };
