@@ -1,7 +1,7 @@
 struct Stats
 {
-	int hp;
-	int maxHp;
+	double hp;
+	double maxHp;
 
 	double luck;
 	double damageCoef;
