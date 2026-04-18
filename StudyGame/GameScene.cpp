@@ -21,6 +21,8 @@ GameScene::~GameScene() = default;
 
 void GameScene::present(SDL_Renderer*& renderer)
 {
+	this->centralizeAllToUser();
+
 	for (Character& character : this->characters)
 	{
 		character.present(renderer);
@@ -83,4 +85,31 @@ AppState GameScene::handleInput()
 		character.handleInput();
 	}
 	return AppState::game;
+}
+
+
+void GameScene::centralizeAllToUser()
+{
+	Vector2 center = { 200, 300 };
+
+	Rect userHitBox = this->characters[0].getEntity()->getHitBox();
+
+	Vector2 offset = { userHitBox.x, userHitBox.y };
+	offset -= center;
+
+	for (Character& character : this->characters)
+	{
+		Entity* entity = character.getEntity();
+
+		if (!entity)
+			continue;
+
+		Rect hitBox = entity->getHitBox();
+		Vector2 entityCoords = { hitBox.x, hitBox.y };
+		entityCoords -= offset;
+
+		entity->setPosition(entityCoords);
+	}
+
+	this->thisfloor.moveOn(offset*-1);
 }

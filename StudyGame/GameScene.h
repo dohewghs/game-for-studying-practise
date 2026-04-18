@@ -14,6 +14,7 @@ class GameScene : public IScene
 
 	GameUI HUD;
 
+	void centralizeAllToUser();
 public:
 	GameScene();
 	~GameScene();
