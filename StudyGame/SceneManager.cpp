@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include "MenuScene.h"
 #include "GameScene.h"
+#include "SettingsScene.h"
 #include <iostream>
 
 SceneManager::SceneManager() :
@@ -33,6 +34,7 @@ void SceneManager::changeScene(AppState state)
 		return;
 
 	currentScene = scenes[sceneIndex];
+	currentScene->setState(state);
 }
 
 IScene* SceneManager::getScene()
@@ -49,6 +51,8 @@ void SceneManager::MakeScenes()
 	
 	this->scenes[static_cast<int>(AppState::menu)] = new MenuScene();
 	this->scenes[static_cast<int>(AppState::game)] = new GameScene();
+	this->scenes[static_cast<int>(AppState::settings)] = new SettingsScene();
+
 
 	this->currentScene = this->scenes[static_cast<int>(AppState::menu)];
 }

@@ -14,6 +14,7 @@ class GameScene : public IScene
 
 	GameUI HUD;
 
+	AppState nextState;
 	void centralizeAllToUser();
 public:
 	GameScene();
@@ -23,4 +24,5 @@ public:
 	void update(float deltaTime) override;
 	AppState handleInput() override;
 
+	void setState(AppState state) override;
 };

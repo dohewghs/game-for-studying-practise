@@ -30,7 +30,7 @@ add_executable (CMakeTarget "main.cpp"
 "GameScene.h" 
 "GameUI.h" 
 "GameScene.cpp" 
-"UserController.h")
+"UserController.h" "SettingsScene.h" "SettingsScene.cpp")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)
