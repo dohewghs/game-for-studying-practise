@@ -45,13 +45,13 @@ IScene* SceneManager::getScene()
 	return this->currentScene;
 }
 
-void SceneManager::MakeScenes()
+void SceneManager::MakeScenes(InputManager* manager)
 {
 	this->scenes.resize(10);
 	
-	this->scenes[static_cast<int>(AppState::menu)] = new MenuScene();
-	this->scenes[static_cast<int>(AppState::game)] = new GameScene();
-	this->scenes[static_cast<int>(AppState::settings)] = new SettingsScene();
+	this->scenes[static_cast<int>(AppState::menu)] = new MenuScene(manager);
+	this->scenes[static_cast<int>(AppState::game)] = new GameScene(manager);
+	this->scenes[static_cast<int>(AppState::settings)] = new SettingsScene(manager);
 
 
 	this->currentScene = this->scenes[static_cast<int>(AppState::menu)];

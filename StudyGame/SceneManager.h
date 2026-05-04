@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "AppState.h"
+#include "InputManager.h"
 
 class IScene;
 
@@ -20,5 +21,5 @@ public:
 
 	IScene* getScene();
 
-	void MakeScenes();
+	void MakeScenes(InputManager* manager);
 };
