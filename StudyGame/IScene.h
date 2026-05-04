@@ -1,9 +1,17 @@
 #pragma once
 #include <SDL3/SDL_render.h>
 #include "AppState.h"
+#include "InputManager.h"
 
 class IScene
 {
+protected:
+	InputManager* inputManager;
+
+	IScene(InputManager* manager)
+	{
+		this->inputManager = manager;
+	}
 public:
 	virtual ~IScene() = default;
 
