@@ -12,6 +12,7 @@ private:
 	SDL_Renderer* renderer;
 
 	SceneManager scenesManager;
+	InputManager* inputKeysManager;
 
 public:
 	App(SDL_Window* _window, SDL_Renderer* _renderer);
