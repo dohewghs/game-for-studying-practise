@@ -4,6 +4,12 @@
 #include <imgui_impl_sdl3.h>
 #include <imgui_impl_sdlrenderer3.h>
 
+MenuScene::MenuScene(InputManager* manager) :
+    IScene(manager),
+    nextState(AppState::menu)
+{
+}
+
 void MenuScene::present(SDL_Renderer*& renderer)
 {
     ImGui::Render();
