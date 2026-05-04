@@ -1,12 +1,23 @@
 #pragma once
 #include "IController.h"
+#include "InputManager.h"
 #include <SDL3/SDL_keyboard.h>
 #include <SDL3/SDL_keycode.h>
 
 class UserController : public IController
 {
+private:
+	InputManager* manager;
+
 public:
-	~UserController() = default;
+	UserController(InputManager* _manager = nullptr)
+	{
+		this->manager = _manager;
+	}
+	~UserController()
+	{
+		this->manager = nullptr;
+	}
 
 	Vector2 getInputDirection() override
 	{
@@ -15,12 +26,15 @@ public:
 		int numkeys;
 		const bool* state = SDL_GetKeyboardState(&numkeys);
 
-		if (state[SDL_SCANCODE_D])
+		SDL_Scancode right = this->manager->getKey(InputManager::direction::right);
+		SDL_Scancode left = this->manager->getKey(InputManager::direction::left);
+
+		if (state[right])
 		{
 			res.x = 1;
 		}
 
-		if (state[SDL_SCANCODE_A])
+		if (state[left])
 		{
 			res.x = -1;
 		}
@@ -33,7 +47,9 @@ public:
 		int numkeys;
 		const bool* state = SDL_GetKeyboardState(&numkeys);
 
-		if (state[SDL_SCANCODE_SPACE])
+		SDL_Scancode jump = this->manager->getKey(InputManager::direction::jump);
+
+		if (state[jump])
 		{
 			return true;
 		}
@@ -46,7 +62,9 @@ public:
 		int numkeys;
 		const bool* state = SDL_GetKeyboardState(&numkeys);
 
-		if (state[SDL_SCANCODE_BACKSPACE])
+		SDL_Scancode attack = this->manager->getKey(InputManager::direction::attack);
+
+		if (state[attack])
 		{
 			return true;
 		}
