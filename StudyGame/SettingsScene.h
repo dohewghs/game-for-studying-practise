@@ -5,9 +5,11 @@ class SettingsScene : public IScene
 {
 private:
 	AppState nextState;
+	int selectedControl = -1;
 
 public:
-	SettingsScene() :
+	SettingsScene(InputManager* manager) :
+		IScene(manager),
 		nextState(AppState::settings)
 	{ }
 
