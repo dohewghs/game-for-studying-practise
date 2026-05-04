@@ -17,7 +17,7 @@ class GameScene : public IScene
 	AppState nextState;
 	void centralizeAllToUser();
 public:
-	GameScene();
+	GameScene(InputManager* manager);
 	~GameScene();
 
 	void present(SDL_Renderer*& renderer) override;

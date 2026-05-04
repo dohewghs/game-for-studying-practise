@@ -6,7 +6,8 @@
 #include "BaseEntityPresenter.h"
 #include <iostream>
 
-GameScene::GameScene() :
+GameScene::GameScene(InputManager* manager) :
+	IScene(manager),
 	characters(),
 	engine(),
 	HUD(),
@@ -14,7 +15,7 @@ GameScene::GameScene() :
 	nextState(AppState::game)
 {
 	this->characters = std::vector<Character>(10);
-	characters[0] = Character(new Entity(), new UserController());
+	characters[0] = Character(new Entity(), new UserController(this->inputManager));
 	characters[1] = Character(new Entity(), new ComputerController());
 }
 
@@ -76,8 +77,13 @@ AppState GameScene::handleInput()
 		{
 			if (event.key.key == SDLK_ESCAPE)
 			{
-				return AppState::close;
+				return AppState::menu; // тут можна зробити перехід на паузу 
 			}
+		}
+
+		if (event.type == SDL_EVENT_QUIT)
+		{
+			return AppState::close;
 		}
 	}
 
