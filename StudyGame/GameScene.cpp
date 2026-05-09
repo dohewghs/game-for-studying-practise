@@ -37,7 +37,7 @@ void GameScene::update(float deltaTime)
 {
 	for (Character& character : this->characters)
 	{
-		character.applyAcceleration(deltaTime);
+		character.update(deltaTime);
 
 		Entity* entity = character.getEntity();
 		if (!entity)
