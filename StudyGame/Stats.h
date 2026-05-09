@@ -13,7 +13,7 @@ struct Stats
 		maxHp(100),
 		luck(1.0),
 		damageCoef(1.0),
-		walkingSpeed(1.0),
+		walkingSpeed(2.0),
 		attackSpeed(1.0)
 	{
 	};
