@@ -9,7 +9,7 @@ Entity::Entity() :
 	statistics(),
 	weapon()
 {
-	this->presenter = new BaseEntityPresenter();
+	this->presenter = new BaseEntityPresenter(this);
 }
 
 Entity::~Entity()
@@ -21,7 +21,6 @@ Entity::~Entity()
 void Entity::applyAcceleration(double deltaTime)
 {
 	this->rigidBody.applyAcceleration(deltaTime);
-	this->weapon.update(deltaTime);
 }
 
 Rect& Entity::getHitBox() {	return this->hitBox; }
@@ -39,6 +38,15 @@ RigidBody& Entity::getRigiBody()
 void Entity::applySpeed(Vector2 direction)
 {
 	rigidBody.setAcceleration(direction * this->statistics.walkingSpeed);
+
+	if (direction.x > 0)
+	{
+		this->presenter->setAnimation("run");
+	}
+	else
+	{
+		this->presenter->setAnimation("idle");
+	}
 }
 
 Vector2 Entity::getVelocity() const
@@ -49,6 +57,8 @@ Vector2 Entity::getVelocity() const
 void Entity::setVelocity(Vector2 _velocity)
 {
 	this->rigidBody.setVelocity(_velocity);
+
+	
 }
 
 void Entity::setPosition(Vector2 position)
@@ -64,9 +74,15 @@ void Entity::present(SDL_Renderer* renderer)
 	if (!this->presenter)
 		return;
 
-	this->presenter->present(renderer, this);
+	this->presenter->present(renderer);
 
 	this->weapon.present(renderer);
+}
+
+void Entity::update(double deltaTime)
+{
+	this->presenter->update(deltaTime);
+	this->weapon.update(deltaTime);
 }
 
 void Entity::useWeapon()

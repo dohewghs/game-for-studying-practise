@@ -37,6 +37,7 @@ public:
 	void setPosition(Vector2 position);
 
 	void present(SDL_Renderer* renderer);
+	void update(double deltaTime);
 
 	void useWeapon();
 	bool isUsingWeapon();
