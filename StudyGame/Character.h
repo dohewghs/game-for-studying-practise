@@ -17,6 +17,8 @@ public:
 	operator bool() const;
 
 	void present(SDL_Renderer* renderer);
+	void update(double deltaTime);
+
 	void applyAcceleration(double deltaTime);
 	void handleInput();
 

@@ -51,6 +51,14 @@ void Character::present(SDL_Renderer* renderer)
 	this->entity->present(renderer);
 }
 
+void Character::update(double deltaTime)
+{
+	this->applyAcceleration(deltaTime);
+
+	if (this->entity)
+		this->entity->update(deltaTime);
+}
+
 void Character::applyAcceleration(double deltaTime)
 {
 	if (!this->entity)
