@@ -12,6 +12,8 @@ int main(int argc, char* argv[])
     SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL);
 
     App app(window, renderer);
+
+    app.init();
     app.run();
 
     //while (true)

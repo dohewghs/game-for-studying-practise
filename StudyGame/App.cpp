@@ -3,6 +3,8 @@
 #include <imgui_impl_sdlrenderer3.h>
 #include <imgui_stdlib.h>
 #include <iostream>
+#include <SDL3_image/SDL_image.h>
+#include <SDL3/SDL_render.h>
 
 App::App(SDL_Window* _window, SDL_Renderer* _renderer) :
 	window(_window),
@@ -15,9 +17,7 @@ App::App(SDL_Window* _window, SDL_Renderer* _renderer) :
 
 	ImGui_ImplSDL3_InitForSDLRenderer(window, renderer);
 	ImGui_ImplSDLRenderer3_Init(renderer);	
-	
-	this->scenesManager.MakeScenes(this->inputKeysManager);
-}
+	}
 
 App::~App()
 {
@@ -54,4 +54,16 @@ void App::run()
 
 		SDL_RenderPresent(renderer);
 	}
+}
+
+void App::init()
+{
+	ResourceManager::init(this->renderer);
+
+	ResourceManager::loadTexture("hero_idle", "..//..//..//..//assets//FREE_Samurai_2D//Sprites//IDLE.png");
+	ResourceManager::loadTexture("Character Run", "..//..//..//..//assets//FREE_Samurai_2D//Sprites//RUN.png");
+
+	ResourceManager::loadTexture("menu_button", "..//..//..//..//assets//Pixel_Buttom.png");
+	
+	this->scenesManager.MakeScenes(this->inputKeysManager);
 }

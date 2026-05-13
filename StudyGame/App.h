@@ -4,6 +4,7 @@
 #include <SDL3/SDL.h>
 #include <vector>
 #include "AppState.h"
+#include "ResourceManager.h"
 
 class App
 {
@@ -21,5 +22,5 @@ public:
 
 	void run();
 
-
+	void init();
 };
