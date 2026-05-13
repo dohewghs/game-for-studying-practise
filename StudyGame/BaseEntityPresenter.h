@@ -1,53 +1,10 @@
 #pragma once
 #include "IEntityPresenter.h"
 #include "Entity.h"
+#include "ResourceManager.h"
 
 class BaseEntityPresenter : public IEntityPresenter
 {
-	bool isLoaded = false;
-	void LoadAnimations(SDL_Renderer* renderer)
-	{
-		this->addAnimation(
-			renderer,
-			"idle",
-			"..//..//..//..//assets//FREE_Samurai_2D//Sprites//IDLE.png",
-			10,
-			2,
-			0,
-			-40
-		);
-
-		this->addAnimation(
-			renderer,
-			"attack",
-			"..//..//..//..//assets//FREE_Samurai_2D//Sprites//ATTACK.png",
-			7,
-			2,
-			0,
-			-40
-		);
-
-		this->addAnimation(
-			renderer,
-			"hurt",
-			"..//..//..//..//assets//FREE_Samurai_2D//Sprites//HURT.png",
-			4,
-			2,
-			0,
-			-40
-		);
-
-		this->addAnimation(
-			renderer,
-			"run",
-			"..//..//..//..//assets//FREE_Samurai_2D//Sprites//RUN.png",
-			16,
-			2,
-			0,
-			-40
-		);
-	}
-
 	Vector2 direction;
 	SDL_FlipMode flipMode;
 
@@ -56,6 +13,8 @@ public:
 	{
 		this->entity = entity;
 		this->direction = { 0,0 };
+		this->addAnimation(ResourceManager::getTexture("hero_idle"), "idle", 10, 2, 0, -40);
+		this->addAnimation(ResourceManager::getTexture("Character Run"), "run", 16, 2, 0, -40);
 	}
 
 	~BaseEntityPresenter()
@@ -65,13 +24,6 @@ public:
 
 	void present(SDL_Renderer* renderer) override
 	{
-		if (!isLoaded)
-		{
-			this->LoadAnimations(renderer);
-			this->setAnimation("idle");
-			isLoaded = true;
-		}
-
 		const AnimationData& anim = animations[currentAnimation];
 
 		if (!anim.texture)
@@ -92,7 +44,6 @@ public:
 		dstRect.x = center_x - (dstRect.w / 2.0f) + anim.offset_x;
 		dstRect.y = center_y - (dstRect.h / 2.0f) + anim.offset_y;
 
-		//SDL_RenderTexture(renderer, anim.texture, &srcRect, &dstRect);
 		SDL_RenderTextureRotated(renderer, anim.texture, &srcRect, &dstRect, 0.0, NULL, this->flipMode);
 	}
 

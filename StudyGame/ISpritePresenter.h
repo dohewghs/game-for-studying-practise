@@ -73,6 +73,32 @@ protected:
             SDL_Log("Помилка завантаження: %s", SDL_GetError());
         }
     }
+
+    void addAnimation(SDL_Texture* texture, const std::string& name, int frames, float scale, float off_x, float off_y)
+    {
+        AnimationData anim;
+
+        anim.texture = texture;
+
+        if (anim.texture)
+        {
+            float tex_w, tex_h;
+            SDL_GetTextureSize(anim.texture, &tex_w, &tex_h);
+
+            anim.frame_width = tex_w / frames;
+            anim.frame_height = tex_h;
+            anim.state.total_frames = frames;
+            anim.scale = scale;
+            anim.offset_x = off_x;
+            anim.offset_y = off_y;
+
+            this->animations[name] = anim;
+        }
+        else
+        {
+            SDL_Log("Помилка завантаження отут: %s", SDL_GetError());
+        }
+    }
 public:
     ISpritePresenter()
     {
