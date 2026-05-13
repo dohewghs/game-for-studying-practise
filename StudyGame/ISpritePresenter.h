@@ -100,4 +100,5 @@ public:
 
     virtual void present(SDL_Renderer* renderer) = 0;
     virtual void update(double deltaTime) = 0;
+    virtual void setDirection(Vector2 dir) = 0;
 };

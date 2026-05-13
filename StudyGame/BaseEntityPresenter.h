@@ -48,10 +48,14 @@ class BaseEntityPresenter : public IEntityPresenter
 		);
 	}
 
+	Vector2 direction;
+	SDL_FlipMode flipMode;
+
 public:
 	BaseEntityPresenter(Entity* entity)
 	{
 		this->entity = entity;
+		this->direction = { 0,0 };
 	}
 
 	~BaseEntityPresenter()
@@ -88,10 +92,11 @@ public:
 		dstRect.x = center_x - (dstRect.w / 2.0f) + anim.offset_x;
 		dstRect.y = center_y - (dstRect.h / 2.0f) + anim.offset_y;
 
-		SDL_RenderTexture(renderer, anim.texture, &srcRect, &dstRect);
+		//SDL_RenderTexture(renderer, anim.texture, &srcRect, &dstRect);
+		SDL_RenderTextureRotated(renderer, anim.texture, &srcRect, &dstRect, 0.0, NULL, this->flipMode);
 	}
 
-	void update(double deltaTime)
+	void update(double deltaTime) override
 	{
 		if (animations.find(currentAnimation) == animations.end())
 			return;
@@ -99,5 +104,15 @@ public:
 		AnimationData& anim = animations[currentAnimation];
 
 		anim.state.update(deltaTime);
+
+		if (this->direction.x < 0)
+			this->flipMode = SDL_FLIP_HORIZONTAL;
+		else
+			this->flipMode = SDL_FLIP_NONE;
+	}
+
+	void setDirection(Vector2 dir) override
+	{
+		this->direction = dir;
 	}
 };

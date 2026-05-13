@@ -38,8 +38,10 @@ RigidBody& Entity::getRigiBody()
 void Entity::applySpeed(Vector2 direction)
 {
 	rigidBody.setAcceleration(direction * this->statistics.walkingSpeed);
+	
+	this->presenter->setDirection(direction);
 
-	if (direction.x > 0)
+	if (direction.x != 0)
 	{
 		this->presenter->setAnimation("run");
 	}
