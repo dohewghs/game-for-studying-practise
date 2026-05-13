@@ -8,7 +8,6 @@
 
 MenuScene::MenuScene(InputManager* manager) :
     IScene(manager),
-    buttonText(nullptr),
     nextState(AppState::menu)
 {
 }
