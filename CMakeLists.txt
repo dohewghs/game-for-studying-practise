@@ -17,3 +17,18 @@ find_package(SDL3_image CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 
 add_subdirectory ("StudyGame")
+
+find_package(Doxygen)
+if (DOXYGEN_FOUND)
+    # Вказуємо шлях до Doxyfile
+    set(DOXYFILE_IN "${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile")
+    
+    add_custom_target(generate_docs
+        COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYFILE_IN}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT "Generating UML Class Diagrams with Doxygen..."
+        VERBATIM
+    )
+else()
+    message(STATUS "Doxygen not found, documentation target will not be created.")
+endif()
