@@ -4,6 +4,7 @@
 #include "ComputerController.h"
 #include "BaseFloorPresenter.h"
 #include "BaseEntityPresenter.h"
+#include "EnemyPresenter.h"
 #include <iostream>
 
 GameScene::GameScene(InputManager* manager) :
@@ -15,8 +16,9 @@ GameScene::GameScene(InputManager* manager) :
 	nextState(AppState::game)
 {
 	this->characters = std::vector<Character>(10);
-	characters[0] = Character(new Entity(), new UserController(this->inputManager));
-	characters[1] = Character(new Entity(), new ComputerController());
+
+	characters[0] = Character(new Entity(new BaseEntityPresenter()), new UserController(this->inputManager));
+	characters[1] = Character(new Entity(new EnemyPresenter()), new ComputerController());
 }
 
 GameScene::~GameScene() = default;
