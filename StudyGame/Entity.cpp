@@ -3,13 +3,14 @@
 #include "BaseEntityPresenter.h"
 #include "Floor.h"
 
-Entity::Entity() :
+Entity::Entity(IEntityPresenter* _presenter) :
 	hitBox(0, 0, 50, 50),
 	rigidBody(),
 	statistics(),
-	weapon()
+	weapon(),
+	presenter(_presenter)
 {
-	this->presenter = new BaseEntityPresenter(this);
+	this->presenter->setEntity(this);
 }
 
 Entity::~Entity()
@@ -33,6 +34,11 @@ Rect Entity::getHitBox() const
 RigidBody& Entity::getRigiBody()
 {
 	return this->rigidBody;
+}
+
+void Entity::setPresenter(IEntityPresenter* _presenter)
+{
+	this->presenter = _presenter;
 }
 
 void Entity::applySpeed(Vector2 direction)

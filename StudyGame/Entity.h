@@ -7,6 +7,7 @@
 #include "IEntityPresenter.h"
 
 class BaseEntityPresenter;
+class EnemyPresenter;
 
 class Entity
 {
@@ -18,7 +19,7 @@ private:
 
 	IEntityPresenter* presenter = nullptr;
 public:
-	Entity();
+	Entity(IEntityPresenter* _presenter = nullptr);
 	~Entity();
 
 	bool isCanJump = false;
@@ -30,6 +31,8 @@ public:
 	RigidBody& getRigiBody();
 	Vector2 getVelocity() const;
 	const Stats getStats() { return this->statistics; }
+
+	void setPresenter(IEntityPresenter* _presenter);
 
 	void applySpeed(Vector2 direction);
 
@@ -45,4 +48,5 @@ public:
 	void applyDamage(double damagePoints);
 
 	friend class BaseEntityPresenter;
+	friend class EnemyPresenter;
 };
