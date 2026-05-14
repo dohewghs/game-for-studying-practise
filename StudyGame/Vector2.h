@@ -50,4 +50,14 @@ public:
 
 		return *this;
 	}
+
+	bool operator==(const Vector2& other)
+	{
+		return this->x == other.x && this->y == other.y;
+	}
+
+	bool operator!=(const Vector2& other)
+	{
+		return !this->operator==(other);
+	}
 };
