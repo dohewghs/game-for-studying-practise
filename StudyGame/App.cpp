@@ -63,7 +63,9 @@ void App::init()
 	ResourceManager::loadTexture("hero_idle", "..//..//..//..//assets//FREE_Samurai_2D//Sprites//IDLE.png");
 	ResourceManager::loadTexture("Character Run", "..//..//..//..//assets//FREE_Samurai_2D//Sprites//RUN.png");
 
+	ResourceManager::loadTexture("health_atlas", "..//..//..//..//assets//Pixel_UI_pack_3//07.png");
+
 	ResourceManager::loadTexture("menu_button", "..//..//..//..//assets//Pixel_Buttom.png");
-	
+
 	this->scenesManager.MakeScenes(this->inputKeysManager);
 }
