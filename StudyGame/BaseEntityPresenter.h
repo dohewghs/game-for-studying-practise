@@ -9,10 +9,11 @@ class BaseEntityPresenter : public IEntityPresenter
 	SDL_FlipMode flipMode;
 
 public:
-	BaseEntityPresenter(Entity* entity)
+	BaseEntityPresenter(Entity* entity = nullptr) : IEntityPresenter(entity)
 	{
-		this->entity = entity;
 		this->direction = { 0,0 };
+		this->flipMode = SDL_FLIP_NONE;
+
 		this->addAnimation(ResourceManager::getTexture("hero_idle"), "idle", 10, 2, 0, -40);
 		this->addAnimation(ResourceManager::getTexture("Character Run"), "run", 16, 2, 0, -40);
 	}
