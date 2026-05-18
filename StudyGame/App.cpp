@@ -10,14 +10,13 @@ App::App(SDL_Window* _window, SDL_Renderer* _renderer) :
 	window(_window),
 	renderer(_renderer),
 
-	scenesManager(),
-	inputKeysManager(new InputManager())
+	scenesManager()
 {
 	ImGui::CreateContext();
 
 	ImGui_ImplSDL3_InitForSDLRenderer(window, renderer);
 	ImGui_ImplSDLRenderer3_Init(renderer);	
-	}
+}
 
 App::~App()
 {
@@ -67,5 +66,5 @@ void App::init()
 
 	ResourceManager::loadTexture("menu_button", "..//..//..//..//assets//Pixel_Buttom.png");
 
-	this->scenesManager.MakeScenes(this->inputKeysManager);
+	this->scenesManager.MakeScenes();
 }

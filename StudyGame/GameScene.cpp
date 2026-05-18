@@ -7,8 +7,8 @@
 #include "EnemyPresenter.h"
 #include <iostream>
 
-GameScene::GameScene(InputManager* manager) :
-	IScene(manager),
+GameScene::GameScene() :
+	IScene(),
 	characters(),
 	engine(),
 	HUD(),
@@ -17,7 +17,7 @@ GameScene::GameScene(InputManager* manager) :
 {
 	this->characters = std::vector<Character>(10);
 
-	characters[0] = Character(new Entity(new BaseEntityPresenter()), new UserController(this->inputManager));
+	characters[0] = Character(new Entity(new BaseEntityPresenter()), new UserController());
 	characters[1] = Character(new Entity(new EnemyPresenter()), new ComputerController());
 }
 

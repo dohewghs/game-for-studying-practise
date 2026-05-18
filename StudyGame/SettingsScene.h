@@ -8,8 +8,7 @@ private:
 	int selectedControl = -1;
 
 public:
-	SettingsScene(InputManager* manager) :
-		IScene(manager),
+	SettingsScene() :
 		nextState(AppState::settings)
 	{ }
 

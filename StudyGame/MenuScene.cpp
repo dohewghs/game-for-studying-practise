@@ -6,8 +6,7 @@
 #include <imgui_impl_sdlrenderer3.h>
 #include "ResourceManager.h"
 
-MenuScene::MenuScene(InputManager* manager) :
-    IScene(manager),
+MenuScene::MenuScene() :
     nextState(AppState::menu)
 {
 }

@@ -7,17 +7,10 @@
 class UserController : public IController
 {
 private:
-	InputManager* manager;
 
 public:
-	UserController(InputManager* _manager = nullptr)
-	{
-		this->manager = _manager;
-	}
-	~UserController()
-	{
-		this->manager = nullptr;
-	}
+	UserController() = default;
+	~UserController() = default;
 
 	Vector2 getInputDirection() override
 	{
@@ -26,18 +19,14 @@ public:
 		int numkeys;
 		const bool* state = SDL_GetKeyboardState(&numkeys);
 
-		SDL_Scancode right = this->manager->getKey(InputManager::direction::right);
-		SDL_Scancode left = this->manager->getKey(InputManager::direction::left);
+		SDL_Scancode right = InputManager::getKey(InputManager::direction::right);
+		SDL_Scancode left = InputManager::getKey(InputManager::direction::left);
 
-		if (state[right])
-		{
-			res.x = 1;
-		}
+		if (state[right]) 
+			res.x += 1;
 
 		if (state[left])
-		{
-			res.x = -1;
-		}
+			res.x -= 1;
 
 		return res;
 	}
@@ -47,7 +36,7 @@ public:
 		int numkeys;
 		const bool* state = SDL_GetKeyboardState(&numkeys);
 
-		SDL_Scancode jump = this->manager->getKey(InputManager::direction::jump);
+		SDL_Scancode jump = InputManager::getKey(InputManager::direction::jump);
 
 		if (state[jump])
 		{
@@ -62,7 +51,7 @@ public:
 		int numkeys;
 		const bool* state = SDL_GetKeyboardState(&numkeys);
 
-		SDL_Scancode attack = this->manager->getKey(InputManager::direction::attack);
+		SDL_Scancode attack = InputManager::getKey(InputManager::direction::attack);
 
 		if (state[attack])
 		{

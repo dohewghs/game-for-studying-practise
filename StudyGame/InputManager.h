@@ -19,10 +19,15 @@ public:
 private:
 	std::vector<SDL_Scancode> keysBindings;
 
-public:
+	static InputManager& get()
+	{
+		static InputManager manager;
+		return manager;
+	}
+
 	InputManager()
 	{
-		this->keysBindings = std::vector<SDL_Scancode>((int)direction::interaction+1);
+		this->keysBindings = std::vector<SDL_Scancode>((int)direction::interaction + 1);
 
 		this->keysBindings[(int)direction::left] = SDL_SCANCODE_A;
 		this->keysBindings[(int)direction::right] = SDL_SCANCODE_D;
@@ -31,25 +36,25 @@ public:
 		this->keysBindings[(int)direction::interaction] = SDL_SCANCODE_E;
 
 	}
-
+public:
 	~InputManager() = default;
 
-	SDL_Scancode getKey(direction dir)
+	static SDL_Scancode getKey(direction dir)
 	{
-		return this->keysBindings[(int)dir];
+		return get().keysBindings[(int)dir];
 	}
 
-	void setKey(direction dir, SDL_Scancode keyCode)
+	static void setKey(direction dir, SDL_Scancode keyCode)
 	{
-		this->keysBindings[(int)dir] = keyCode;
+		get().keysBindings[(int)dir] = keyCode;
 	}
 
-	const char* getKeyName(direction dir)
+	static const char* getKeyName(direction dir)
 	{
-		return SDL_GetScancodeName(this->keysBindings[(int)dir]);
+		return SDL_GetScancodeName(get().keysBindings[(int)dir]);
 	}
 
-	void saveToFile(const std::string& filename) 
+	/*void saveToFile(const std::string& filename) 
 	{
 		std::ofstream ofs(filename, std::ios::binary);
 		if (ofs.is_open()) 
@@ -68,5 +73,5 @@ public:
 			ifs.read(reinterpret_cast<char*>(keysBindings.data()), keysBindings.size() * sizeof(SDL_Scancode));
 			ifs.close();
 		}
-	}
+	}*/
 };

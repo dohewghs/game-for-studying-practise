@@ -5,7 +5,7 @@ class MenuScene : public IScene
 {
 	AppState nextState;
 public:
-	MenuScene(InputManager* manager);
+	MenuScene();
 	~MenuScene() = default;
 
 	void present(SDL_Renderer*& renderer) override;

@@ -21,5 +21,5 @@ public:
 
 	IScene* getScene();
 
-	void MakeScenes(InputManager* manager);
+	void MakeScenes();
 };

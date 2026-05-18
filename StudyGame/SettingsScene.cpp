@@ -61,7 +61,7 @@ void SettingsScene::update(float deltaTime)
         ImGui::SameLine(120);
 
         // Визначаємо текст, який буде на кнопці
-        const char* buttonLabel = (selectedControl == i) ? "Waiting..." : inputManager->getKeyName(dir);
+        const char* buttonLabel = (selectedControl == i) ? "Waiting..." : InputManager::getKeyName(dir);
 
         // Малюємо кнопку-картинку
         if (ImGui::ImageButton("##keybtn", (ImTextureID)tex, keyBtnSize, uv0, uv1))
@@ -129,7 +129,7 @@ AppState SettingsScene::handleInput()
 
             // Тут викликай свій InputManager, щоб зберегти нову клавішу
             // Наприклад: inputManager.setKey(selectedControl, newKey);
-            this->inputManager->setKey((InputManager::direction)selectedControl, newKey);
+            InputManager::setKey((InputManager::direction)selectedControl, newKey);
 
             SDL_Log("Action %d bound to key: %s", selectedControl, SDL_GetScancodeName(newKey));
 

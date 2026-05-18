@@ -6,12 +6,7 @@
 class IScene
 {
 protected:
-	InputManager* inputManager;
-
-	IScene(InputManager* manager)
-	{
-		this->inputManager = manager;
-	}
+	IScene() = default;
 public:
 	virtual ~IScene() = default;
 
