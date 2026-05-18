@@ -14,10 +14,10 @@ public:
 	}
 	virtual ~IEntityPresenter() = default;
 
-	virtual void present(SDL_Renderer* renderer) = 0;
-
 	void setEntity(Entity* _entity)
 	{
 		this->entity = _entity;
 	};
+
+	virtual void present(SDL_Renderer* renderer) = 0;
 };

@@ -5,19 +5,13 @@
 
 class BaseEntityPresenter : public IEntityPresenter
 {
-	Vector2 direction;
-	SDL_FlipMode flipMode;
-
 public:
 	BaseEntityPresenter(Entity* entity = nullptr) : IEntityPresenter(entity)
 	{
-		this->direction = { 0,0 };
-		this->flipMode = SDL_FLIP_NONE;
-
 		this->addAnimation(ResourceManager::getTexture("hero_idle"), "idle", 10, 2, 0, -40);
 		this->addAnimation(ResourceManager::getTexture("Character Run"), "run", 16, 2, 0, -40);
 	}
-
+	
 	~BaseEntityPresenter()
 	{
 		this->entity = nullptr;
@@ -25,7 +19,7 @@ public:
 
 	void present(SDL_Renderer* renderer) override
 	{
-		const AnimationData& anim = animations[currentAnimation];
+		const AnimationData& anim = getCurrentAnimation();
 
 		if (!anim.texture)
 			return;
@@ -36,35 +30,50 @@ public:
 			anim.frame_width, anim.frame_height
 		};
 
-		SDL_FRect dstRect = toSDLFRect(entity->hitBox);
-		float center_x = dstRect.x + (dstRect.w / 2.0f);
-		float center_y = dstRect.y + (dstRect.h / 2.0f);
+		//SDL_FRect dstRect = toSDLFRect(entity->hitBox);
 
-		dstRect.w = anim.frame_width * anim.scale;
-		dstRect.h = anim.frame_height * anim.scale;
-		dstRect.x = center_x - (dstRect.w / 2.0f) + anim.offset_x;
-		dstRect.y = center_y - (dstRect.h / 2.0f) + anim.offset_y;
+		SDL_FRect entityrect = toSDLFRect(entity->getHitBox());
 
-		SDL_RenderTextureRotated(renderer, anim.texture, &srcRect, &dstRect, 0.0, NULL, this->flipMode);
+		SDL_FRect dstRect;
+		dstRect.x = entityrect.x;
+		dstRect.y = entityrect.y;
+		dstRect.w = anim.frame_width;
+		dstRect.h = anim.frame_height;
+
+		Vector2 center = CenterOf(entityrect);
+		
+		ApplyScale(dstRect, anim.scale);
+
+		Centralize(dstRect, center);
+
+		ApplyOffset(dstRect, { anim.offset_x, anim.offset_y });
+
+		RenderCurrentTexture(renderer, &srcRect, &dstRect);
+	}	
+
+private:
+	void ApplyScale(SDL_FRect& rect, double scaleFactor)
+	{
+		rect.w *= scaleFactor;
+		rect.h *= scaleFactor;
+	}
+	void ApplyOffset(SDL_FRect& rect, Vector2 offset)
+	{
+		rect.x += offset.x;
+		rect.y += offset.y;
 	}
 
-	void update(double deltaTime) override
+	Vector2 CenterOf(const SDL_FRect& rect)
 	{
-		if (animations.find(currentAnimation) == animations.end())
-			return;
-
-		AnimationData& anim = animations[currentAnimation];
-
-		anim.state.update(deltaTime);
-
-		if (this->direction.x < 0)
-			this->flipMode = SDL_FLIP_HORIZONTAL;
-		else
-			this->flipMode = SDL_FLIP_NONE;
+		return {
+			rect.x + (rect.w / 2.0f),
+			rect.y + (rect.h / 2.0f)
+		};
 	}
 
-	void setDirection(Vector2 dir) override
+	void Centralize(SDL_FRect& rect, Vector2 center)
 	{
-		this->direction = dir;
+		rect.x = center.x - (rect.w / 2.0f);
+		rect.y = center.y - (rect.h / 2.0f);
 	}
 };

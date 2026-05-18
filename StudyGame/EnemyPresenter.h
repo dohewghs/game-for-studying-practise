@@ -22,7 +22,7 @@ public:
 
 	void present(SDL_Renderer* renderer) override
 	{
-		const AnimationData& anim = animations[currentAnimation];
+		const AnimationData& anim = getCurrentAnimation();
 
 		if (!anim.texture)
 			return;
@@ -87,26 +87,4 @@ public:
 
 		return frameIndex;
 	}
-
-	void update(double deltaTime) override
-	{
-		if (animations.find(currentAnimation) == animations.end())
-			return;
-
-		AnimationData& anim = animations[currentAnimation];
-
-		anim.state.update(deltaTime);
-
-		if (this->direction.x < 0)
-			this->flipMode = SDL_FLIP_HORIZONTAL;
-		else
-			this->flipMode = SDL_FLIP_NONE;
-	}
-
-	void setDirection(Vector2 dir) override
-	{
-		if (this->direction != dir)
-			this->direction = dir;
-	}
-
 };

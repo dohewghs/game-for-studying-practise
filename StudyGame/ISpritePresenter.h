@@ -1,54 +1,18 @@
 #pragma once
-#include <SDL3/SDL_render.h>
-#include <SDL3_image/SDL_image.h>
+#include "AnimationData.h"
+
 #include <unordered_map>
 #include <string>
 
-struct AnimationData
-{
-    struct AnimationState
-    {
-        int total_frames = 1;
-        double animation_duration = 0.5;
-
-        int current_frame = 0;
-        double time_accumulator = 0.0;
-
-        void update(double deltaTime)
-        {
-            time_accumulator += deltaTime;
-
-            if (time_accumulator >= animation_duration)
-            {
-                int framesToNext = static_cast<int>(time_accumulator / animation_duration);
-
-                current_frame = (current_frame + framesToNext) % total_frames;
-
-                time_accumulator -= framesToNext * animation_duration;
-            }
-        }
-    };
-
-    AnimationState state;
-    SDL_Texture* texture = nullptr;
-    float frame_width = 0.0f;
-    float frame_height = 0.0f;
-    float scale = 2.0f;
-    float offset_x = 0.0f;
-    float offset_y = 0.0f;
-
-    void loadTexture(SDL_Renderer* renderer, std::string imagePath)
-    {
-        this->texture = IMG_LoadTexture(renderer, imagePath.c_str());
-    }
-};
-
 class ISpritePresenter
 {
-protected:
+private:
     std::unordered_map<std::string, AnimationData> animations;
     std::string currentAnimation;
 
+    SDL_FlipMode flipMode = SDL_FLIP_NONE;
+    Vector2 direction = { 0,0 };
+protected:
     void addAnimation(SDL_Renderer* renderer, const std::string& name, const std::string& path,
         int frames, float scale, float off_x, float off_y)
     {
@@ -73,7 +37,6 @@ protected:
             SDL_Log("Помилка завантаження: %s", SDL_GetError());
         }
     }
-
     void addAnimation(SDL_Texture* texture, const std::string& name, int frames, float scale, float off_x, float off_y)
     {
         AnimationData anim;
@@ -98,6 +61,16 @@ protected:
         {
             SDL_Log("Помилка завантаження отут: %s", SDL_GetError());
         }
+    }
+
+    void updateCurrentAnimation(double deltaTime)
+    {
+        
+    }
+
+    AnimationData& getCurrentAnimation()
+    {
+        return animations[currentAnimation];
     }
 public:
     ISpritePresenter()
@@ -124,7 +97,46 @@ public:
         }
     }
 
+    void update(double deltaTime)
+    {
+        updateCurrentAnimation(deltaTime);
+
+        updateFlipMode();
+
+        if (animations.find(currentAnimation) == animations.end())
+            return;
+
+        auto& anim = animations[currentAnimation];
+
+        anim.state.update(deltaTime);
+
+        if (this->direction.x < 0)
+        {
+            this->flipMode = SDL_FLIP_HORIZONTAL;
+        }
+        else
+            this->flipMode = SDL_FLIP_NONE;
+    }
+
+    void RenderCurrentTexture(SDL_Renderer* renderer, const SDL_FRect* srcRect, const SDL_FRect* dstRect)
+    {
+        if (animations.find(currentAnimation) == animations.end())
+            return;
+
+        auto anim = animations[currentAnimation];
+
+        SDL_RenderTextureRotated(renderer, anim.texture, srcRect, dstRect, 0.0, NULL, this->flipMode);
+    }
+
+    void updateFlipMode()
+    {
+        
+    }
+
+    void setDirection(Vector2 dir)
+    {
+        this->direction = dir;
+    }
+
     virtual void present(SDL_Renderer* renderer) = 0;
-    virtual void update(double deltaTime) = 0;
-    virtual void setDirection(Vector2 dir) = 0;
 };
