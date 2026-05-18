@@ -18,29 +18,15 @@ private:
 	bool isNowUsing;
 
 public:
-	Weapon() :
-		damage(10),
-		hitBox({0,0,50,7}),
-		angle(10),
-		rotateWeapon(false),
-		presenter(new BaseWeaponPresenter(&this->hitBox, &this->angle)),
-		isNowUsing(false)
-	{
-	};
-
-	~Weapon()
-	{
-		if (this->presenter)
-			delete this->presenter;
-	}
+	Weapon();
+	~Weapon();
 	
 	double getDamage() const;
 
 	void update(double deltaTime);
+	void present(SDL_Renderer* renderer);
 
 	void setCoords(Vector2 coords);
-
-	void present(SDL_Renderer* renderer);
 
 	void rotateAndUse();
 

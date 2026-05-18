@@ -1,6 +1,21 @@
 #include "Weapon.h"
 #include "Entity.h"
 
+Weapon::Weapon() :
+	damage(10),
+	hitBox({ 0,0,50,7 }),
+	angle(10),
+	rotateWeapon(false),
+	presenter(new BaseWeaponPresenter(&this->hitBox, &this->angle)),
+	isNowUsing(false)
+{
+}
+Weapon::~Weapon()
+{
+	if (this->presenter)
+		delete this->presenter;
+}
+
 double Weapon::getDamage() const
 {
 	return this->damage;
