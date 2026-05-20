@@ -77,5 +77,7 @@ void App::init()
 
 	ResourceManager::loadTexture("menu_button", "..//..//..//..//assets//Pixel_Buttom.png");
 
+	ResourceManager::loadTexture("world_tileset", "..//..//..//..//assets//brackeys_platformer_assets//sprites//world_tileset.png");
+
 	this->scenesManager.MakeScenes();
 }

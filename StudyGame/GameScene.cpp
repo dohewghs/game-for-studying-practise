@@ -2,7 +2,6 @@
 #include "Character.h"
 #include "UserController.h"
 #include "ComputerController.h"
-#include "BaseFloorPresenter.h"
 #include "BaseEntityPresenter.h"
 #include "EnemyPresenter.h"
 #include <iostream>
@@ -12,7 +11,7 @@ GameScene::GameScene() :
 	characters(),
 	engine(),
 	HUD(),
-	thisfloor(new BaseFloorPresenter),
+	thisfloor(),
 	nextState(AppState::game)
 {
 	this->characters = std::vector<Character>(10);

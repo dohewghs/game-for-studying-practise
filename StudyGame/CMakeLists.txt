@@ -16,8 +16,8 @@ add_executable (CMakeTarget "main.cpp"
 "Entity.cpp" 
 "Floor.h" "Floor.cpp" 
 "PhysicsEngine.h" "PhysicsEngine.cpp" 
-"IFloorPresenter.h" 
-"BaseFloorPresenter.h" 
+"IBlockPresenter.h" 
+"BaseBlockPresenter.h" 
 "BaseEntityPresenter.h" 
 "IScene.h" 
 "MenuScene.h" 
@@ -30,7 +30,7 @@ add_executable (CMakeTarget "main.cpp"
 "GameScene.h" 
 "GameUI.h" 
 "GameScene.cpp" 
-"UserController.h" "SettingsScene.h" "SettingsScene.cpp" "InputManager.h" "Character.cpp")
+"UserController.h" "SettingsScene.h" "SettingsScene.cpp" "InputManager.h" "Character.cpp" "Block.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET CMakeTarget PROPERTY CXX_STANDARD 20)

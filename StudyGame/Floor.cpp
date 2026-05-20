@@ -1,19 +1,31 @@
 #include "Floor.h"
-#include "IFloorPresenter.h"
+#include <fstream>
+#include <sstream>
 
-Floor::Floor(IFloorPresenter* _presenter)
+Floor::Floor()
 {
-	this->floor = std::vector<Rect>();
-	floor.push_back(Rect(0, 400, 500, 10));
-	floor.push_back(Rect(300, 300, 10, 100));
+	this->floor = std::vector<Block>();
+	this->blockPresenter = new BaseBlockPresenter();
 
-	this->presenter = _presenter;
+	this->LoadFrom("..//..//..//..//assets//Maps//map1.txt");
 }
 
-Floor::~Floor()
+void Floor::LoadFrom(std::string path)
 {
-	if (this->presenter)
-		delete this->presenter;
+	std::ifstream inFile(path);
+
+	std::string line;
+
+	while (std::getline(inFile, line))
+	{
+		std::stringstream ss(line);
+		
+		Block block;
+
+		ss >> block;
+		
+		this->floor.push_back(block);
+	}
 }
 
 bool Floor::hasIntersection(const Rect& rect) const
@@ -81,7 +93,10 @@ bool Floor::CollisionsX(Rect& rect, double VelocityX) const
 
 void Floor::present(SDL_Renderer*& renderer)
 {
-	this->presenter->present(renderer, this);
+	for (const Block& block : this->floor)
+	{
+		this->blockPresenter->present(renderer, block);
+	}
 }
 
 void Floor::moveOn(Vector2 offset)

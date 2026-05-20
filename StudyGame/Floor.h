@@ -1,8 +1,10 @@
 #pragma once
-#include "Rect.h"
+#include "Block.h"
 #include "Vector2.h"
 #include <vector>
+#include "string"
 #include <SDL3/SDL_render.h>
+#include "BaseBlockPresenter.h"
 
 class IFloorPresenter;
 class BaseFloorPresenter;
@@ -10,12 +12,13 @@ class BaseFloorPresenter;
 class Floor
 {
 private:
-	std::vector<Rect> floor;
-	IFloorPresenter* presenter;
+	std::vector<Block> floor;
+	IBlockPresenter* blockPresenter;
 
+	void LoadFrom(std::string path);
 public:
-	Floor(IFloorPresenter* presenter);
-	~Floor();
+	Floor();
+	~Floor() = default;
 
 	bool hasIntersection(const Rect& rect) const;
 	bool CollisionsY(Rect& rect, double VelocityY) const;
