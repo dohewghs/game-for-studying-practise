@@ -3,7 +3,7 @@
 
 std::pair<Vector2, Vector2> PhysicsEngine::getAvailableMovement(Entity& entity, const Floor& floor, double deltaTime)
 {
-	double GRAVITY_SCALE = 9.81 * 0.1;
+	double GRAVITY_SCALE = 9.81 * 30;
 
 	Vector2 finalVelocity = entity.getVelocity();
 	finalVelocity.y += GRAVITY_SCALE * deltaTime;

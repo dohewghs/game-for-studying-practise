@@ -28,8 +28,18 @@ void App::run()
 {
 	bool isRunning = true;
 
+	uint64_t lastTime = SDL_GetTicks();
 	while (isRunning)
 	{
+		uint64_t currentTime = SDL_GetTicks();
+		// Рахуємо різницю в мілісекундах і переводимо в секунди
+		double deltaTime = static_cast<double>(currentTime - lastTime);
+		lastTime = currentTime;
+
+		// Захист від заїдань (якщо вікно перетягували, deltaTime не має бути гігантським)
+		if (deltaTime > 0.1) 
+			deltaTime = 0.1;
+
 		IScene* currentScene = this->scenesManager.getScene();
 
 		AppState state = currentScene->handleInput();
@@ -42,7 +52,7 @@ void App::run()
 			break;
 		}
 
-		currentScene->update(0.07);
+		currentScene->update(0.016);
 
 		this->scenesManager.changeScene(state);
 
@@ -61,6 +71,7 @@ void App::init()
 
 	ResourceManager::loadTexture("hero_idle", "..//..//..//..//assets//FREE_Samurai_2D//Sprites//IDLE.png");
 	ResourceManager::loadTexture("Character Run", "..//..//..//..//assets//FREE_Samurai_2D//Sprites//RUN.png");
+	ResourceManager::loadTexture("hurt", "..//..//..//..//assets//FREE_Samurai_2D//Sprites//HURT.png");
 
 	ResourceManager::loadTexture("health_atlas", "..//..//..//..//assets//Pixel_UI_pack_3//07.png");
 

@@ -9,10 +9,15 @@ class ISpritePresenter
 private:
     std::unordered_map<std::string, AnimationData> animations;
     std::string currentAnimation;
+    std::string nextAnimation;
 
     SDL_FlipMode flipMode = SDL_FLIP_NONE;
     Vector2 direction = { 0,0 };
+
+    
 protected:
+    bool cancelUpdate = false;
+
     void addAnimation(SDL_Renderer* renderer, const std::string& name, const std::string& path,
         int frames, float scale, float off_x, float off_y)
     {
@@ -63,11 +68,6 @@ protected:
         }
     }
 
-    void updateCurrentAnimation(double deltaTime)
-    {
-        
-    }
-
     AnimationData& getCurrentAnimation()
     {
         return animations[currentAnimation];
@@ -77,6 +77,7 @@ public:
     {
         this->animations = std::unordered_map<std::string, AnimationData>();
         this->currentAnimation = "";
+        this->nextAnimation = "";
     }
     virtual ~ISpritePresenter()
     {
@@ -91,31 +92,43 @@ public:
 
     void setAnimation(const std::string& name)
     {
-        if (animations.find(name) != animations.end())
+
+        if (animations.find(name) == animations.end())
+            return;
+
+        if (currentAnimation == name || nextAnimation == name)
+            return;
+
+        if (name == "hurt")
         {
-            currentAnimation = name;
+            this->animations[currentAnimation].state.reset();
+            
+            std::swap(this->currentAnimation, this->nextAnimation);
+            
+            this->currentAnimation = name;
         }
+
+        nextAnimation = name;
     }
 
     void update(double deltaTime)
     {
-        updateCurrentAnimation(deltaTime);
-
-        updateFlipMode();
-
-        if (animations.find(currentAnimation) == animations.end())
+        if (this->cancelUpdate)
             return;
 
-        auto& anim = animations[currentAnimation];
+        std::cout << this->currentAnimation << std::endl;
 
-        anim.state.update(deltaTime);
+        this->updateFlipMode();
 
-        if (this->direction.x < 0)
+        bool loopFinished = this->animations[currentAnimation].state.update(deltaTime);
+
+        if (loopFinished && !nextAnimation.empty())
         {
-            this->flipMode = SDL_FLIP_HORIZONTAL;
+            currentAnimation = nextAnimation;
+            nextAnimation = "";
+
+            animations[currentAnimation].state.reset();
         }
-        else
-            this->flipMode = SDL_FLIP_NONE;
     }
 
     void RenderCurrentTexture(SDL_Renderer* renderer, const SDL_FRect* srcRect, const SDL_FRect* dstRect)
@@ -130,7 +143,12 @@ public:
 
     void updateFlipMode()
     {
-        
+        if (this->direction.x < 0)
+        {
+            this->flipMode = SDL_FLIP_HORIZONTAL;
+        }
+        else
+            this->flipMode = SDL_FLIP_NONE;
     }
 
     void setDirection(Vector2 dir)

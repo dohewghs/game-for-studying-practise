@@ -79,7 +79,7 @@ void Character::handleInput()
 	if (this->entity->isCanJump && this->controller->isJumpPressed())
 	{
 		Vector2 velocity = this->entity->getVelocity();
-		velocity.y = -15;
+		velocity.y = -15 * 15;
 
 		this->entity->setVelocity(velocity);
 	}

@@ -29,7 +29,7 @@ public:
 	void applyAcceleration(double deltaTime)
 	{
 		this->velocity += acceleration * deltaTime;
-		this->velocity.x *= 0.98;
+		this->velocity.x *= 0.95;
 
 		acceleration = { 0,0 };
 	}

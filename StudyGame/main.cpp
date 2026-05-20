@@ -10,6 +10,7 @@ int main(int argc, char* argv[])
 
     SDL_Window* window = SDL_CreateWindow("Test", 640, 480, 0);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL);
+    SDL_SetRenderVSync(renderer, 1); // 1 - увімкнути VSync
 
     App app(window, renderer);
 

@@ -10,6 +10,7 @@ public:
 	{
 		this->addAnimation(ResourceManager::getTexture("hero_idle"), "idle", 10, 2, 0, -40);
 		this->addAnimation(ResourceManager::getTexture("Character Run"), "run", 16, 2, 0, -40);
+		this->addAnimation(ResourceManager::getTexture("hurt"), "hurt", 4, 2, 0, -40);
 	}
 	
 	~BaseEntityPresenter()
@@ -19,10 +20,18 @@ public:
 
 	void present(SDL_Renderer* renderer) override
 	{
+
 		const AnimationData& anim = getCurrentAnimation();
 
 		if (!anim.texture)
 			return;
+
+		if (this->entity->statistics.hp <= 0)
+		{
+			setRedColor(anim.texture);
+			this->cancelUpdate = true;
+		}
+		
 
 		SDL_FRect srcRect =
 		{
@@ -49,6 +58,8 @@ public:
 		ApplyOffset(dstRect, { anim.offset_x, anim.offset_y });
 
 		RenderCurrentTexture(renderer, &srcRect, &dstRect);
+
+		restoreColor(anim.texture);
 	}	
 
 private:
@@ -75,5 +86,17 @@ private:
 	{
 		rect.x = center.x - (rect.w / 2.0f);
 		rect.y = center.y - (rect.h / 2.0f);
+	}
+
+	void setRedColor(SDL_Texture* texture)
+	{
+		SDL_SetTextureColorMod(texture, 255, 0, 0);
+		SDL_SetTextureAlphaMod(texture, 128);
+	}
+
+	void restoreColor(SDL_Texture* texture)
+	{
+		SDL_SetTextureColorMod(texture, 255, 255, 255);
+		SDL_SetTextureAlphaMod(texture, 255);
 	}
 };

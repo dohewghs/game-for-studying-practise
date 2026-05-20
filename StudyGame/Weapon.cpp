@@ -25,7 +25,7 @@ void Weapon::update(double deltaTime)
 {
 	if (this->rotateWeapon)
 	{
-		this->angle += 5 * deltaTime;
+		this->angle += deltaTime * 100;
 	}
 
 	if (angle > 110)

@@ -43,7 +43,7 @@ void Entity::setPresenter(IEntityPresenter* _presenter)
 
 void Entity::applySpeed(Vector2 direction)
 {
-	rigidBody.setAcceleration(direction * this->statistics.walkingSpeed);
+	rigidBody.setAcceleration(direction * this->statistics.walkingSpeed * 7);
 	
 	this->presenter->setDirection(direction);
 
@@ -103,13 +103,15 @@ bool Entity::isUsingWeapon()
 	return this->weapon.isUsing();
 }
 
-void Entity::attack(Entity* entity)
+void Entity::attack(Entity* enemy)
 {
-	Rect enemyRect = entity->getHitBox();
+	Rect enemyRect = enemy->getHitBox();
 	if (this->weapon.isHit(enemyRect))
 	{
-		entity->applyDamage(this->weapon.getDamage() * this->statistics.damageCoef);
-		std::cout << "YYYYYEEEEEEEEEEEEEEEE" << '\n';
+		enemy->applyDamage(this->weapon.getDamage() * this->statistics.damageCoef);
+		//std::cout << "Intersection" << '\n';
+
+		enemy->presenter->setAnimation("hurt");
 
 	}
 }

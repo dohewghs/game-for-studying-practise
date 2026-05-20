@@ -7,22 +7,41 @@ struct AnimationData
     struct AnimationState
     {
         int total_frames = 1;
+        
         double animation_duration = 0.5;
 
         int current_frame = 0;
         double time_accumulator = 0.0;
 
-        void update(double deltaTime)
+        bool update(double deltaTime)
         {
             time_accumulator += deltaTime;
 
-            if (time_accumulator >= animation_duration)
-            {
-                int framesToNext = static_cast<int>(time_accumulator / animation_duration);
+            // ¬ираховуЇмо тривал≥сть одного кадру
+            double frame_duration = animation_duration / total_frames;
+            bool finished_loop = false;
 
-                current_frame = (current_frame + framesToNext) % total_frames;
-                time_accumulator -= framesToNext * animation_duration;
+            if (time_accumulator >= frame_duration)
+            {
+                int framesToNext = static_cast<int>(time_accumulator / frame_duration);
+
+                int next_frame = current_frame + framesToNext;
+                if (next_frame >= total_frames)
+                {
+                    finished_loop = true; // јн≥мац≥€ д≥йшла до к≥нц€
+                }
+
+                current_frame = next_frame % total_frames;
+                time_accumulator -= framesToNext * frame_duration;
             }
+
+            return finished_loop;
+        }
+
+        void reset()
+        {
+            current_frame = 0;
+            time_accumulator = 0.0;
         }
     };
 
